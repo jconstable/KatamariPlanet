@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katamari.CSharp", "Katamari.CSharp.csproj", "{93853E82-6F82-FBB7-A007-B6084FC8A6DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katamari.CSharp.Editor", "Katamari.CSharp.Editor.csproj", "{403F77D5-4F1A-A421-71C0-369E6150C061}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93853E82-6F82-FBB7-A007-B6084FC8A6DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93853E82-6F82-FBB7-A007-B6084FC8A6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93853E82-6F82-FBB7-A007-B6084FC8A6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93853E82-6F82-FBB7-A007-B6084FC8A6DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{403F77D5-4F1A-A421-71C0-369E6150C061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F77D5-4F1A-A421-71C0-369E6150C061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{403F77D5-4F1A-A421-71C0-369E6150C061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403F77D5-4F1A-A421-71C0-369E6150C061}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
