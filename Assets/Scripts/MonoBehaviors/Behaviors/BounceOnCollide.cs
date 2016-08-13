@@ -15,8 +15,11 @@ public class BounceOnCollide : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Vector3 impulse = collision.impulse;
-        impulse *= Bounciness;
+        if (impulse.sqrMagnitude > 0f)
+        {
+            impulse *= -Bounciness;
 
-        _rigidBody.AddForce(impulse, ForceMode.Impulse);
+            _rigidBody.AddForce(impulse, ForceMode.Impulse);
+        }
     }
 }

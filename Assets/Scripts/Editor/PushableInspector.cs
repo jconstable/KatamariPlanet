@@ -5,7 +5,7 @@ using UnityEditor;
 public class PushableInspector : Editor
 {
     private int _dirLineLength = 10;
-    void OnInpsectorGUI()
+    public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 

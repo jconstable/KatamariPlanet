@@ -4,13 +4,13 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class Pushable : MonoBehaviour
 {
-
     public float PushForce = 2f;
-    public float JumpForce = 3f;
 
     private Rigidbody _rigidBody;
     private KatamariCore _core;
     private FollowCamera _followCam;
+
+    private Vector3 _initialPositionForReset;
 
     public Vector3 CurrentPushDir { get; private set; }
 
@@ -20,6 +20,7 @@ public class Pushable : MonoBehaviour
         _core = gameObject.GetComponent<KatamariCore>();
 
         _followCam = GameObject.FindObjectOfType<FollowCamera>();
+        _initialPositionForReset = _rigidBody.transform.position;
     }
 
     public void HandlePush(Vector3 cameraFacingInput)
@@ -41,6 +42,6 @@ public class Pushable : MonoBehaviour
 
     public void Reset()
     {
-        _rigidBody.transform.position = Vector3.up * 3f;
+        _rigidBody.transform.position = _initialPositionForReset;
     }
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 [CustomEditor(typeof(KatamariMass))]
 public class KatamariMassInspector : Editor
 {
-    void OnInpsectorGUI()
+    public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
