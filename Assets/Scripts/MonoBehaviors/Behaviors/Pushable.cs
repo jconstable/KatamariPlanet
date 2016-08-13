@@ -5,6 +5,7 @@ using System.Collections;
 public class Pushable : MonoBehaviour
 {
     public float PushForce = 2f;
+    public float MaxVelocityMag = 5;
 
     private Rigidbody _rigidBody;
     private KatamariCore _core;
@@ -30,9 +31,13 @@ public class Pushable : MonoBehaviour
         CurrentPushDir = -FollowCamera.GetSurfaceDirToCam(_core, _followCam);
         q.SetLookRotation(CurrentPushDir, _core.transform.position.normalized);
 
-        Vector3 cameraCorrectedInput = q * (cameraFacingInput * PushForce);
+        Vector3 cameraCorrectedInput = q * (cameraFacingInput * PushForce );
 
-        _rigidBody.AddForce(cameraCorrectedInput);
+        // Add force if below max speed
+        if (Vector3.Dot(cameraCorrectedInput, _rigidBody.velocity) < ( MaxVelocityMag * _rigidBody.transform.localScale.y ) )
+        {
+            _rigidBody.AddForce(cameraCorrectedInput);
+        }
     }
 
     public void HandleJump()

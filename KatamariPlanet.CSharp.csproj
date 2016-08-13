@@ -67,8 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Helpers\Tags.cs" />
+    <Compile Include="Assets\Scripts\Managers\EventManager.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Actors\FakeGravity.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Actors\KatamariCore.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviors\Actors\KatamariTracker.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Actors\PlanetConstants.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Behaviors\BounceOnCollide.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Behaviors\Jumpable.cs" />

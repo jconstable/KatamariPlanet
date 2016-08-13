@@ -44,15 +44,7 @@ public class FollowCameraPanState : FollowCamera.IFollowCameraState
             _totalDrag -= amt;
         }
 
-        Vector3 camPos = _core.transform.position + (dirToCam * _cam.FollowDistance);
-        Vector3 add = (camPos.normalized * _cam.CamYHeight);
-        camPos += add;
-
-        // Create a rotation (that respects our proper "down". transform.forward does NOT respect this well) to face the camera at the ball
-        Quaternion q = Quaternion.identity;
-        q.SetLookRotation((_core.transform.position - camPos), camPos);
-
-        _cam.SetNewPositioning(camPos, q);
+        _cam.SetNewPositioning(dirToCam);
 
         _mouseDragLastPos = Input.mousePosition;
     }

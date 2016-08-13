@@ -89,10 +89,19 @@ public class FollowCamera : MonoBehaviour
         gameObject.transform.rotation = _desiredRotation;
     }
 
-    public void SetNewPositioning(Vector3 position, Quaternion rotation)
+    public void SetNewPositioning( Vector3 dirToCam )
     {
-        _desiredPosition = position;
-        _desiredRotation = rotation;
+        // Put the camera at the proper distance from the ball, and give it some height
+        Vector3 camPos = _katamariCore.transform.position + (dirToCam * FollowDistance * _katamariCore.transform.lossyScale.y);
+        Vector3 add = (camPos.normalized * CamYHeight * _katamariCore.transform.lossyScale.y);
+        camPos += add;
+
+        // Create a rotation (that respects our proper "down". transform.forward does NOT respect this well) to face the camera at the ball
+        Quaternion q = Quaternion.identity;
+        q.SetLookRotation((_katamariCore.transform.position - camPos), camPos);
+
+        _desiredPosition = camPos;
+        _desiredRotation = q;
     }
 
     void SwitchState(FollowState state)
