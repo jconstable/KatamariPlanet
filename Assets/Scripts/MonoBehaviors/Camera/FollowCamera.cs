@@ -124,7 +124,9 @@ public class FollowCamera : MonoBehaviour
 
             if (_currentState != null)
             {
+#if VERBOSE_LOGGING
                 Debug.Log("Switching FollowCamera state to " + state.ToString());
+#endif
                 _currentState.OnEnter();
             }
         }

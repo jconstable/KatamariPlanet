@@ -10,9 +10,14 @@ public class EventManager : MonoBehaviour {
     {
         get
         {
-            if( _instance == null )
+            if( _instance == null && Application.isPlaying )
             {
                 _instance = GameObject.FindObjectOfType<EventManager>();
+                if( _instance == null )
+                {
+                    GameObject o = new GameObject("EventManager");
+                    _instance = o.AddComponent<EventManager>();
+                }
                 if( _instance != null )
                 {
                     _instance.Setup();

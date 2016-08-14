@@ -11,6 +11,8 @@ public class KatamariCore : MonoBehaviour
     public float SwallowScaleAdditionFactor = 0.1f;
     public float GrowthAnimationFactor = 0.1f;
 
+    public float ScorePerMassMultiplier = 100f;
+
     private Rigidbody _rigidBody;
     private KatamariMass _mass;
     private KatamariTracker _tracker;
@@ -39,8 +41,7 @@ public class KatamariCore : MonoBehaviour
         if( _lastMass < _mass.Mass )
         {
             _lastMass = _mass.Mass;
-
-            Debug.Log("New max core mass " + _lastMass.ToString());
+            
             EventManager.SendEvent(MassChangedEventName, _lastMass * SizeComparisonFactor);
 #if UNITY_EDITOR
             _mass.SetName();
@@ -84,6 +85,8 @@ public class KatamariCore : MonoBehaviour
         float addition = (m.Mass * SwallowScaleAdditionFactor);
 
         _additionToProcess += addition;
+
+        EventManager.SendEvent(LevelStats.AddScoreEventName, (int)Mathf.Ceil(addition * ScorePerMassMultiplier));
     }
 
     public void OnDrawGizmos()
