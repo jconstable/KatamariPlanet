@@ -2,54 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EventManager : MonoBehaviour {
-
-    // Singleton, gross
-    private static EventManager _instance;
-	private static EventManager instance
-    {
-        get
-        {
-            if( _instance == null && Application.isPlaying )
-            {
-                _instance = GameObject.FindObjectOfType<EventManager>();
-                if( _instance == null )
-                {
-                    GameObject o = new GameObject("EventManager");
-                    _instance = o.AddComponent<EventManager>();
-                }
-                if( _instance != null )
-                {
-                    _instance.Setup();
-                }
-            }
-            return _instance;
-        }
-    }
-
-    public static void AddListener(string eventName, EventCallback action)
-    {
-        if( instance != null )
-        {
-            instance._AddListener(eventName, action);
-        }
-    }
-
-    public static void RemoveListener( string eventName, EventCallback action )
-    {
-        if( instance != null )
-        {
-            instance._RemoveListener(eventName, action);
-        }
-    }
-
-    public static void SendEvent( string eventName, object param )
-    {
-        if( instance != null )
-        {
-            instance._SendEvent(eventName, param);
-        }
-    }
+public class EventManager {
 
     // The API for the callback function. Return true means stop processing this transaction.
     public delegate bool EventCallback( object param );
@@ -65,14 +18,22 @@ public class EventManager : MonoBehaviour {
     private List<DeletePair> _callbacksToRemoveAtEndOfFrame;
 
 
-    private void Setup()
+    public void Setup()
     {
         _listenersByEventName = new Dictionary<string, List<EventCallback>>();
         _callbacksToRemoveAtEndOfFrame = new List<DeletePair>();
-        DontDestroyOnLoad(transform.gameObject);
     }
 
-    void LateUpdate()
+    public void Teardown()
+    {
+        _listenersByEventName.Clear();
+        _callbacksToRemoveAtEndOfFrame.Clear();
+
+        _listenersByEventName = null;
+        _callbacksToRemoveAtEndOfFrame = null;
+    }
+
+    public void LateUpdate( float dt )
     {
         if( _callbacksToRemoveAtEndOfFrame.Count > 0 )
         {
@@ -91,7 +52,7 @@ public class EventManager : MonoBehaviour {
         }
     }
 
-    private void _AddListener( string eventName, EventCallback action )
+    public void AddListener( string eventName, EventCallback action )
     {
         Debug.Assert(!string.IsNullOrEmpty(eventName), "Null or empty event name given to EventManager::AddListener");
         if( !string.IsNullOrEmpty(eventName) )
@@ -108,12 +69,12 @@ public class EventManager : MonoBehaviour {
         }
     }
 
-    private void _RemoveListener( string eventName, EventCallback action )
+    public void RemoveListener( string eventName, EventCallback action )
     {
         _callbacksToRemoveAtEndOfFrame.Add(new DeletePair() { eventName = eventName, callback = action });
     }
 
-    private void _SendEvent( string eventName, object param )
+    public void SendEvent( string eventName, object param )
     {
         List<EventCallback> list = null;
         if (_listenersByEventName.TryGetValue(eventName, out list))

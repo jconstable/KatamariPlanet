@@ -8,14 +8,22 @@ public class MassUIHub : MonoBehaviour {
     private float _mass = 0f;
     private float _lastMass = 0f;
 
-	// Use this for initialization
-	void Start () {
-        EventManager.AddListener(LevelStats.UpdatedMassEventName, OnMassChanged);
-	}
-	
-	// Update is called once per frame
-	void OnDestroy () {
-        EventManager.RemoveListener(LevelStats.UpdatedMassEventName, OnMassChanged);
+    private EventManager _eventManager;
+
+    public void Setup(EventManager eventManager)
+    {
+        _eventManager = eventManager;
+
+        _eventManager.AddListener(LevelStats.UpdatedMassEventName, OnMassChanged);
+
+        MassLabel.text = 1.ToString("N0");
+    }
+
+    public void Teardown()
+    {
+        _eventManager.RemoveListener(LevelStats.UpdatedMassEventName, OnMassChanged);
+
+        _eventManager = null;
     }
 
     bool OnMassChanged( object p )

@@ -2,24 +2,20 @@
 using System.Collections;
 
 public class GameplayUIController {
+    private KatamariApp _app;
 
-    // Singleton, yuck
-    private static GameplayUIController _instance;
-    public static GameplayUIController instance
+    public void Setup( KatamariApp app )
     {
-        get
-        {
-            if( _instance == null )
-            {
-                _instance = new GameplayUIController();
-            }
+        _app = app;
+    }
 
-            return _instance;
-        }
+    public void Teardown()
+    {
+        _app = null;
     }
 
     public int ShowGameplayUI()
     {
-        return UIManager.LoadUI(GameplayUIHub.UIKey, 1);
+        return _app.GetUIManager().LoadUI(GameplayUIHub.UIKey, 1);
     }
 }

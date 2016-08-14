@@ -10,13 +10,23 @@ public class LevelScoreHub : MonoBehaviour {
     private int _score = 0;
     private int _lastScore = -1;
 
+    private EventManager _eventManager;
+
 	// Use this for initialization
-	void Start () {
-        EventManager.AddListener(LevelStats.UpdatedScoreEventName, UpdateScore);
+	public void Setup ( EventManager eventManager ) {
+        _eventManager = eventManager;
+
+        _eventManager.AddListener(LevelStats.UpdatedScoreEventName, UpdateScore);
 
         ScoreLabel.text = 0.ToString("N0");
-
 	}
+
+    public void Teardown()
+    {
+        _eventManager.RemoveListener(LevelStats.UpdatedScoreEventName, UpdateScore);
+
+        _eventManager = null;
+    }
 
     bool UpdateScore(object p)
     {

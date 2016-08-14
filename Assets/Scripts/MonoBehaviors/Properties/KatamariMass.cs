@@ -18,12 +18,21 @@ public class KatamariMass : MonoBehaviour
         SetName();
 #endif
 
-        EventManager.AddListener(KatamariCore.MassChangedEventName, CompareMass);
+        KatamariApp app = KatamariAppProxy.instance;
+        if(app != null)
+        {
+            app.GetEventManager().AddListener(KatamariCore.MassChangedEventName, CompareMass);
+        }
+        
     }
 
     void OnDisable()
     {
-        EventManager.RemoveListener(KatamariCore.MassChangedEventName, CompareMass);
+        KatamariApp app = KatamariAppProxy.instance;
+        if (app != null)
+        {
+            app.GetEventManager().RemoveListener(KatamariCore.MassChangedEventName, CompareMass);
+        }
     }
 
     bool CompareMass( object param )

@@ -41,8 +41,12 @@ public class KatamariCore : MonoBehaviour
         if( _lastMass < _mass.Mass )
         {
             _lastMass = _mass.Mass;
-            
-            EventManager.SendEvent(MassChangedEventName, _lastMass * SizeComparisonFactor);
+
+            KatamariApp app = KatamariAppProxy.instance;
+            if (app != null)
+            {
+                app.GetEventManager().SendEvent(MassChangedEventName, _lastMass * SizeComparisonFactor);
+            }
 #if UNITY_EDITOR
             _mass.SetName();
 #endif
@@ -86,7 +90,11 @@ public class KatamariCore : MonoBehaviour
 
         _additionToProcess += addition;
 
-        EventManager.SendEvent(LevelStats.AddScoreEventName, (int)Mathf.Ceil(addition * ScorePerMassMultiplier));
+        KatamariApp app = KatamariAppProxy.instance;
+        if (app != null)
+        {
+            app.GetEventManager().SendEvent(LevelStats.AddScoreEventName, (int)Mathf.Ceil(addition * ScorePerMassMultiplier));
+        }
     }
 
     public void OnDrawGizmos()

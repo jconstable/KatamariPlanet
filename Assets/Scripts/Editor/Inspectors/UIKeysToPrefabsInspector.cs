@@ -4,12 +4,21 @@ using UnityEditor;
 [CustomEditor(typeof(UIKeysToPrefabs))]
 public class UIKeysToPrefabsInspector : Editor
 {
-
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
         UIKeysToPrefabs data = target as UIKeysToPrefabs;
+
+        UIManager uiManager = null;
+        if( Application.isPlaying )
+        {
+            KatamariApp app = KatamariAppProxy.instance;
+            if( app != null )
+            {
+                uiManager = app.GetUIManager();
+            }
+        }
 
         int count = data.GetNumUIPaths();
         for(int i = 0; i < count; ++i )
@@ -23,7 +32,7 @@ public class UIKeysToPrefabsInspector : Editor
             {
                 if (GUILayout.Button("Load"))
                 {
-                    UIManager.LoadUI(map.UIKey, 0);
+                    uiManager.LoadUI(map.UIKey, 0);
                 }
             } else
             {
