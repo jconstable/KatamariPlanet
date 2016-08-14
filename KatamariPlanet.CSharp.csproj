@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\UI\Controllers\GameplayUIController.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\GameplayUIHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\LevelScoreHub.cs" />
+    <Compile Include="Assets\Scripts\UI\ViewHubs\MassUIHub.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
