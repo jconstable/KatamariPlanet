@@ -39,11 +39,17 @@ public class KatamariAppProxy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _app.OnUpdate(Time.deltaTime);
+        if( _app != null )
+        {
+            _app.OnUpdate(Time.deltaTime);
+        }
 	}
 
     void LateUpdate()
     {
-        _app.OnLateUpdate(Time.deltaTime);
+        if( _app != null )
+        {
+            _app.OnLateUpdate(Time.deltaTime);
+        }
     }
 }

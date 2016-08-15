@@ -27,11 +27,16 @@ public class LevelSelectItemHub : MonoBehaviour {
     [SerializeField]
     private Sprite OnSprite;
 
-    public void Setup( LevelData.LevelDefinition def, LevelScore score, bool locked )
+    private string _levelID;
+    private EventManager _eventManager;
+
+    public void Setup( EventManager eventManager, LevelData.LevelDefinition def, LevelScore score, bool locked )
     {
         LevelNumberLabel.text = def.LevelNumberText;
         LevelNameLabel.text = def.LevelNameText.Replace( "\n", "\n" );
 
+        _eventManager = eventManager;
+        
         if (locked)
         {
             BgSprite.sprite = OffSprite;
@@ -47,6 +52,8 @@ public class LevelSelectItemHub : MonoBehaviour {
         }
         else
         {
+            _levelID = def.LevelID;
+
             BgSprite.sprite = OnSprite;
 
             if (score.HighScore == 0)
@@ -74,6 +81,14 @@ public class LevelSelectItemHub : MonoBehaviour {
                     Debug.LogError("Level Definition " + def.LevelID + " does not define star requirement " + i.ToString());
                 }
             }
+        }
+    }
+
+    public void OnLevelSelected()
+    {
+        if( !string.IsNullOrEmpty( _levelID ) )
+        {
+            _eventManager.SendEvent(LevelSelectController.LevelSelectedEventName, _levelID);
         }
     }
 }

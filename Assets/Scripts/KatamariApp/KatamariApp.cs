@@ -4,14 +4,6 @@ using System.Collections.Generic;
 
 public class KatamariApp {
 
-    public interface IAppState
-    {
-        void Setup(Dictionary<string, string> refs);
-        void OnEnter(KatamariApp app);
-        void OnExit();
-        void OnUpdate(float dt);
-    }
-
     // Managers
     private EventManager _eventManager;
     public EventManager GetEventManager() { return _eventManager; }
@@ -46,11 +38,13 @@ public class KatamariApp {
     public LevelSelectController GetLevelSelectController() { return _levelSelectController; }
 
     // Game States
-    private Dictionary<string, IAppState> _appStates;
-    private IAppState _currentAppState;
+    private Dictionary<string, GameState> _appStates;
+    private GameState _currentAppState;
 
     private KatamariAppProxy _proxy = null;
     public KatamariAppProxy KatamariAppProxy { get { return _proxy; } }
+
+    public LevelData.LevelDefinition CurrentlySelectedLevel { get; set; }
 
     // KatamariAppProxy Hooks
     public void Setup( KatamariAppProxy proxy )
@@ -89,7 +83,7 @@ public class KatamariApp {
         
         // Go to first state
         LoadGameStates();
-        SwitchToState(BootGameState.StateKey);
+        SwitchToState( typeof(BootGameState).ToString() );
     }
 
     public void Teardown()
@@ -129,7 +123,7 @@ public class KatamariApp {
 
     private void LoadGameStates()
     {
-        _appStates = new Dictionary<string, IAppState>();
+        _appStates = new Dictionary<string, GameState>();
 
         GameStates statesData = Resources.Load(Files.AppGameStatesDataPrefabPath) as GameStates;
         for (int i = 0; i < statesData.GameStateDataList.Count; ++i)
@@ -139,7 +133,7 @@ public class KatamariApp {
             try
             {
                 // A little bit of reflection
-                IAppState state = System.Activator.CreateInstance(System.Type.GetType( data.ClassName )) as IAppState;
+                GameState state = System.Activator.CreateInstance(System.Type.GetType( data.ClassName )) as GameState;
                 Debug.Assert(state != null, "Unable to instantiate IAppState class named " + data.ClassName);
 
                 if (state != null)
@@ -147,11 +141,11 @@ public class KatamariApp {
                     _appStates.Add(data.ClassName, state);
 
                     // Build a Dictionary from the list that was setup in the data ScriptableObject
-                    Dictionary<string, string> refDict = new Dictionary<string, string>();
+                    Dictionary<string, Object> refDict = new Dictionary<string, Object>();
                     for( int r = 0; r < data.ObjectRefs.Count; ++r )
                     {
-                        GameStates.GameStateRef ro = data.ObjectRefs[i];
-                        refDict.Add(ro.RefName, ro.RefPath);
+                        GameStates.GameStateRef ro = data.ObjectRefs[r];
+                        refDict.Add(ro.RefName, ro.Ref);
                     }
 
                     state.Setup(refDict);
@@ -166,7 +160,7 @@ public class KatamariApp {
 
     public void SwitchToState( string stateName )
     {
-        IAppState newState = null;
+        GameState newState = null;
 
         if( _appStates.TryGetValue( stateName, out newState ) )
         {
@@ -180,6 +174,9 @@ public class KatamariApp {
                 _currentAppState = newState;
                 _currentAppState.OnEnter(this);
             }
+        } else
+        {
+            Debug.Log("Unable to find game state: " + stateName);
         }
     }
 }

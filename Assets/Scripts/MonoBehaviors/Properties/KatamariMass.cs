@@ -29,7 +29,7 @@ public class KatamariMass : MonoBehaviour
     void OnDisable()
     {
         KatamariApp app = KatamariAppProxy.instance;
-        if (app != null)
+        if (app != null && app.GetEventManager() != null )
         {
             app.GetEventManager().RemoveListener(KatamariCore.MassChangedEventName, CompareMass);
         }

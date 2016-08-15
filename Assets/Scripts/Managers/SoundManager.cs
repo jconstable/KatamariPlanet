@@ -22,6 +22,11 @@ public class SoundManager {
             Resources.UnloadAsset(Clip);
             Clip = null;
         }
+
+        public void Touch()
+        {
+            ChangedAt = Time.time;
+        }
     }
     
     private PlayState _lastPlayState;
@@ -89,27 +94,23 @@ public class SoundManager {
     }
 
 
-    public void PlayMusic(string assetPath, float volume, float fadeTime = 0f )
+    public void PlayMusic( AudioClip clip, float volume, float fadeTime = 0f )
     {
-        AudioClip clip = null;
-
-        try
-        {
-            clip = Resources.Load(assetPath) as AudioClip;
-        } catch( System.Exception e )
-        {
-            Debug.LogError("Sound Manager: Error loading audio at path " + assetPath + " " + e.Message);
-        }
-
         if (clip != null)
         {
             if (_lastPlayState != null)
             {
                 _lastPlayState.Unload(_channels);
+                _lastPlayState.Touch();
             }
 
             _lastPlayState = _currentPlayState;
-            _currentChannel = (_currentChannel++) % _channels.Count;
+            if(_lastPlayState != null )
+            {
+                _lastPlayState.Touch();
+            }
+            
+            _currentChannel = (_currentChannel + 1) % _channels.Count;
 
             _currentPlayState = new PlayState()
             {
@@ -119,7 +120,7 @@ public class SoundManager {
                 FadeTime = fadeTime,
                 Clip = clip
             };
-
+            
             _channels[_currentChannel].clip = clip;
             _channels[_currentChannel].Play();
         }

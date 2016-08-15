@@ -9,7 +9,7 @@ public class GameStates : ScriptableObject
     public class GameStateRef
     {
         public string RefName;
-        public string RefPath;
+        public Object Ref;
     }
 
     [System.Serializable]

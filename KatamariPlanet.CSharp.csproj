@@ -72,6 +72,8 @@
     <Compile Include="Assets\Scripts\Helpers\UIHelpers.cs" />
     <Compile Include="Assets\Scripts\Helpers\UILayers.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\BootGameState.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\GameStates\GameState.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\GameStates\PlayGameState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\KatamariApp.cs" />
     <Compile Include="Assets\Scripts\Managers\EventManager\EventManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />

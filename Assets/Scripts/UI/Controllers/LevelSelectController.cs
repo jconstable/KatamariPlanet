@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class LevelSelectController {
 
+    public static readonly string LevelSelectedEventName = "LevelSelected";
+
     private KatamariApp _app;
 
     public class LevelSelectParams
@@ -20,12 +22,17 @@ public class LevelSelectController {
     public void Setup(KatamariApp app)
     {
         _app = app;
+
+        _app.GetEventManager().AddListener(LevelSelectedEventName, OnLevelSelected);
     }
 
     public void Teardown()
     {
+        _app.GetEventManager().RemoveListener(LevelSelectedEventName, OnLevelSelected);
         _app = null;
     }
+
+    private int _levelSelectScreenID = -1;
 
     public void ShowLevelSelect()
     {
@@ -56,7 +63,7 @@ public class LevelSelectController {
             });
         }
 
-        _app.GetUIManager().LoadUI(LevelSelectUIHub.UIKey, param, (int)UILayers.Layers.DefaultUI);
+        _levelSelectScreenID = _app.GetUIManager().LoadUI(LevelSelectUIHub.UIKey, param, (int)UILayers.Layers.DefaultUI);
     }
 
     // Decide if this level should be locked for the player. 
@@ -78,5 +85,24 @@ public class LevelSelectController {
         }
 
         return locked;
+    }
+
+    private bool OnLevelSelected( object param )
+    {
+        string levelID = param as string;
+
+        LevelData.LevelDefinition levelDef = _app.GetLevelData().FindByLevelID(levelID);
+        if( levelDef != null )
+        {
+            _app.GetFadeUIController().FadeIn(() =>
+           {
+               _app.GetUIManager().DismissUI(_levelSelectScreenID);
+
+               _app.CurrentlySelectedLevel = levelDef;
+               _app.SwitchToState(typeof(PlayGameState).ToString());
+           });
+        }
+
+        return false;
     }
 }
