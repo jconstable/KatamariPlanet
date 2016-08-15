@@ -6,7 +6,6 @@ public class BootScreenController {
     public static readonly string InstructionsScreenClickedEventName = "InstructionScreenClicked";
 
     private KatamariApp _app;
-    private float _timeScreenShown = 0;
 
     private int _bootScreenId;
     private int _instructionsScreenId;
@@ -31,7 +30,6 @@ public class BootScreenController {
     {
         _bootScreenId = _app.GetUIManager().LoadUI(BootScreenHub.UIKey, null, (int)UILayers.Layers.DefaultUI);
         _app.GetFadeUIController().FadeOut( null );
-        _timeScreenShown = Time.time;
     }
 
     public void ShowInstructionsScreen()
@@ -41,24 +39,15 @@ public class BootScreenController {
 
     public bool OnBootScreenClicked( object param )
     {
-        float configuredTimeDelay = (float)param;
+        _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
 
-        float timeDelta = (Time.time - _timeScreenShown);
-        if (timeDelta > configuredTimeDelay)
+        _app.GetFadeUIController().FadeIn( () =>
         {
-            _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
+            _app.GetUIManager().DismissUI(_bootScreenId);
+            ShowInstructionsScreen();
+            _app.GetFadeUIController().FadeOut(null);
+        });
 
-            _app.GetFadeUIController().FadeIn( () =>
-            {
-                _app.GetUIManager().DismissUI(_bootScreenId);
-                ShowInstructionsScreen();
-                _app.GetFadeUIController().FadeOut(null);
-            });
-            
-        } else
-        {
-            Debug.Log("BootScreenController swallowing click for " + (configuredTimeDelay - timeDelta) + " more sec");
-        }
         return false;
     }
 
