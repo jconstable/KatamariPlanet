@@ -45,7 +45,10 @@ public class UIManager {
     {
         foreach( KeyValuePair<int,Canvas> pair in _loadedScreens )
         {
-            GameObject.Destroy(pair.Value.gameObject);
+            if(pair.Value != null)
+            {
+                GameObject.Destroy(pair.Value.gameObject);
+            }            
         }
 
         _loadedScreens.Clear();

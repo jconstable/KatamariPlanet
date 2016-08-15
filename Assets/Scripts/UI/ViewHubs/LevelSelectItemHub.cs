@@ -19,6 +19,14 @@ public class LevelSelectItemHub : MonoBehaviour {
     [SerializeField]
     private UnityEngine.UI.Graphic[] StarForegrounds;
 
+    [SerializeField]
+    private UnityEngine.UI.Image BgSprite;
+
+    [SerializeField]
+    private Sprite OffSprite;
+    [SerializeField]
+    private Sprite OnSprite;
+
     public void Setup( LevelData.LevelDefinition def, LevelScore score, bool locked )
     {
         LevelNumberLabel.text = def.LevelNumberText;
@@ -26,6 +34,8 @@ public class LevelSelectItemHub : MonoBehaviour {
 
         if (locked)
         {
+            BgSprite.sprite = OffSprite;
+
             for (int i = 0; i < StarBackgrounds.Length; ++i)
             {
                 StarBackgrounds[i].enabled = false;
@@ -37,6 +47,8 @@ public class LevelSelectItemHub : MonoBehaviour {
         }
         else
         {
+            BgSprite.sprite = OnSprite;
+
             if (score.HighScore == 0)
             {
                 HighScoreLabel.text = EmptyScoreText;

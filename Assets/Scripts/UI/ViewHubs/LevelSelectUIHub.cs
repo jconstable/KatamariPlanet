@@ -1,84 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LevelSelectUIHub : MonoBehaviour, UIManager.IUIScreen {
 
     public static readonly string UIKey = "level.select";
-
-    public class LevelSelectUIParams
-    {
-        public LevelData data;
-        public PlayerProfile profile;
-    }
-
+    
     [SerializeField]
     private LevelSelectItemHub LevelSelectItemTemplate;
 
-    private KatamariApp _app;
-    private LevelSelectUIParams _params;
-
     public void Setup(KatamariApp app, object param)
     {
-        _app = app;
-
-        _params = param as LevelSelectUIParams;
-        Popuplate();
+        LevelSelectController.LevelSelectParams p = param as LevelSelectController.LevelSelectParams;
+        Popuplate( p.Sets );
     }
 
     public void Teardown()
     {
-        _app = null;
     }
 
-    private void Popuplate()
+    private void Popuplate( List<LevelSelectController.LevelSelectParams.ParamSet> Sets )
     {
         // Make sure the template object is deactivated. It exists only for authoring/cloning
         LevelSelectItemTemplate.gameObject.SetActive(false);
-
-        PlayerProfile player = _app.GetPlayerProfile();
-        RectTransform templateRect = LevelSelectItemTemplate.GetComponent<RectTransform>();
-
         Transform parent = LevelSelectItemTemplate.transform.parent;
-        RectTransform parentRect = parent.GetComponent<RectTransform>();
 
-        for ( int i = 0; i < _params.data.Levels.Length; ++i )
+        for ( int i = 0; i < Sets.Count; ++i )
         {
-            LevelData.LevelDefinition def = _params.data.Levels[i];
-            LevelScore score = player.GetLevelScore(def.LevelID);
+            LevelSelectController.LevelSelectParams.ParamSet set = Sets[i];
 
+            // Instantiate a copy of the template, and make it active
             GameObject newCellOb = GameObject.Instantiate(LevelSelectItemTemplate.gameObject) as GameObject;
             newCellOb.SetActive(true);
 
-            bool locked = DetermineIfLocked(def, player);
-
+            // Grab the instance's item component, and set it up
             LevelSelectItemHub item = newCellOb.GetComponent<LevelSelectItemHub>();
-            item.Setup(def, score, locked);
+            item.Setup( set.levelDef, set.playerScore, set.locked );
 
             // Parent the newly created cell to the scroll view
             newCellOb.transform.SetParent(parent, false);
-
-            newCellOb.transform.localPosition += Vector3.up * -templateRect.rect.size.y * i;
         }
-    }
-
-    // Look up the level that is marked as a dependency, and if there is one, make sure the player has scored enough stars
-    private bool DetermineIfLocked(LevelData.LevelDefinition def, PlayerProfile player)
-    {
-        bool locked = true;
-        if (string.IsNullOrEmpty(def.DependentLevelID))
-        {
-            locked = false;
-        }
-        else
-        {
-            LevelData.LevelDefinition dependencyDef = _params.data.FindByLevelID(def.DependentLevelID);
-            LevelScore dependency = player.GetLevelScore(def.DependentLevelID);
-            if (dependency.HighScore > dependencyDef.StarPointRequirements[def.RequiredStarsInDependencyLevel])
-            {
-                locked = false;
-            }
-        }
-
-        return locked;
     }
 }
