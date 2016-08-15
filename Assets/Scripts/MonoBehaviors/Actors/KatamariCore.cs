@@ -11,7 +11,7 @@ public class KatamariCore : MonoBehaviour
     public float SwallowScaleAdditionFactor = 0.1f;
     public float GrowthAnimationFactor = 0.1f;
 
-    public float ScorePerMassMultiplier = 100f;
+    public float ScorePerMassMultiplier = 10000f;
 
     private Rigidbody _rigidBody;
     private KatamariMass _mass;
@@ -93,7 +93,8 @@ public class KatamariCore : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if (app != null)
         {
-            app.GetEventManager().SendEvent(LevelStats.AddScoreEventName, (int)Mathf.Ceil(addition * ScorePerMassMultiplier));
+            float score = addition * ScorePerMassMultiplier;
+            app.GetEventManager().SendEvent(LevelStats.AddScoreEventName, (int)score);
         }
     }
 

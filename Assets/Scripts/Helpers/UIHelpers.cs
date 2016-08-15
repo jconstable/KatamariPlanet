@@ -30,7 +30,7 @@ public class UIHelpers {
 
         while( seconds > 0 )
         {
-            int seg = seconds / 60;
+            int seg = seconds % 60;
 
             if(b.Length > 0)
             {
@@ -38,6 +38,7 @@ public class UIHelpers {
             }
 
             b.Insert(0, seg.ToString("00"));
+            seconds /= 60;
         }
 
         if( b.Length == 0 )
