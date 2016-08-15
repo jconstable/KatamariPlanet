@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class KatamariApp {
-
+    
     // Managers
     private EventManager _eventManager;
     public EventManager GetEventManager() { return _eventManager; }
@@ -47,7 +47,7 @@ public class KatamariApp {
     public LevelData.LevelDefinition CurrentlySelectedLevel { get; set; }
 
     // KatamariAppProxy Hooks
-    public void Setup( KatamariAppProxy proxy )
+    public void Setup( KatamariAppProxy proxy, int musicChannels, int sfxChannels )
     {
         _proxy = proxy;
 
@@ -58,7 +58,7 @@ public class KatamariApp {
         
         _eventManager.Setup();
         _uiManager.Setup( this );
-        _soundManager.Setup(this, 2); // Hardcoding 2 channels
+        _soundManager.Setup(this, musicChannels, sfxChannels);
 
         // Models
         _levelStats = new LevelStats();

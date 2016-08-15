@@ -46,6 +46,8 @@ public class BootScreenController {
         float timeDelta = (Time.time - _timeScreenShown);
         if (timeDelta > configuredTimeDelay)
         {
+            _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
+
             _app.GetFadeUIController().FadeIn( () =>
             {
                 _app.GetUIManager().DismissUI(_bootScreenId);
@@ -62,6 +64,8 @@ public class BootScreenController {
 
     public bool OnInstructionsScreenClicked( object param )
     {
+        _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
+
         _app.GetFadeUIController().FadeIn(() =>
         {
             _app.GetUIManager().DismissUI(_instructionsScreenId);

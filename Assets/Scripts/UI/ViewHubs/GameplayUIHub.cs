@@ -12,11 +12,16 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
     [SerializeField]
     private MassUIHub MassUIHub;
 
+    [SerializeField]
+    private UnityEngine.UI.Text HighScoreText;
+
 	public void Setup(KatamariApp app, object param)
     {
-        EventManager eventManager = app.GetEventManager();
-        LevelScoreHub.Setup(eventManager);
-        MassUIHub.Setup(eventManager);
+        int highScore = (int)param;
+        HighScoreText.text = highScore.ToString("N0");
+
+        LevelScoreHub.Setup(app.GetEventManager(), app.GetSoundManager());
+        MassUIHub.Setup(app.GetEventManager());
     }
 
     public void Teardown()

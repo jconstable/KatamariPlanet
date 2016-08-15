@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class SoundManager {
 
     private KatamariApp _app;
-    private List<AudioSource> _channels;
-    private int _currentChannel = 0;
+    private List<AudioSource> _musicChannels;
+    private List<AudioSource> _sfxChannels;
+    private int _currentMusicChannel = 0;
+    private int _currentSFXChannel = 0;
 
     private class PlayState
     {
@@ -21,6 +23,7 @@ public class SoundManager {
             channels[Channel].Stop();
             Resources.UnloadAsset(Clip);
             Clip = null;
+            channels[Channel].clip = null;
         }
 
         public void Touch()
@@ -32,29 +35,51 @@ public class SoundManager {
     private PlayState _lastPlayState;
     private PlayState _currentPlayState;
 
-	public void Setup( KatamariApp app, int numChannels )
+    private UISounds _uiSounds;
+
+	public void Setup( KatamariApp app, int numMusicChannels, int numSFXChannels )
     {
         _app = app;
 
         GameObject appProxyGo = _app.KatamariAppProxy.gameObject;
 
-        _channels = new List<AudioSource>(numChannels);
-        for( int i = 0; i < numChannels; ++i )
+        _musicChannels = new List<AudioSource>(numMusicChannels);
+        for( int i = 0; i < numMusicChannels; ++i )
         {
             AudioSource s = appProxyGo.AddComponent<AudioSource>();
-            _channels.Add(s);
+            _musicChannels.Add(s);
         }
+
+        _sfxChannels = new List<AudioSource>(numSFXChannels);
+        for (int i = 0; i < numSFXChannels; ++i)
+        {
+            AudioSource s = appProxyGo.AddComponent<AudioSource>();
+            _sfxChannels.Add(s);
+        }
+
+        _uiSounds = Resources.Load(Files.UISoundsResourcePath) as UISounds;
+        Debug.Assert(_uiSounds != null, "Unable to load UI sounds at resource path: " + Files.UISoundsResourcePath);
     }
 
     public void Teardown()
     {
-        for( int i = 0; i < _channels.Count; ++i )
+        for( int i = 0; i < _musicChannels.Count; ++i )
         {
             // Destroy the component on the GameObject
-            GameObject.Destroy(_channels[i]);
+            GameObject.Destroy(_musicChannels[i]);
         }
-        _channels.Clear();
-        _channels = null;
+        _musicChannels.Clear();
+        _musicChannels = null;
+
+        for (int i = 0; i < _sfxChannels.Count; ++i)
+        {
+            // Destroy the component on the GameObject
+            GameObject.Destroy(_sfxChannels[i]);
+        }
+        _sfxChannels.Clear();
+        _sfxChannels = null;
+
+        _uiSounds = null;
     }
 
     public void OnUpdate( float dt )
@@ -64,7 +89,7 @@ public class SoundManager {
             float volume = Fade(_lastPlayState, _lastPlayState.Volume, 0f, Time.time);
             if( Mathf.Approximately(volume, 0f ) )
             {
-                _lastPlayState.Unload( _channels );
+                _lastPlayState.Unload(_musicChannels);
                 _lastPlayState = null;
             }
         }    
@@ -76,7 +101,7 @@ public class SoundManager {
 
     private float Fade( PlayState s, float from, float to, float time )
     {
-        AudioSource source = _channels[s.Channel];
+        AudioSource source = _musicChannels[s.Channel];
 
         if (!Mathf.Approximately(source.volume, to))
         {
@@ -94,13 +119,13 @@ public class SoundManager {
     }
 
 
-    public void PlayMusic( AudioClip clip, float volume, float fadeTime = 0f )
+    public void PlayMusic( AudioClip clip, float volume, float fadeTime = 0f, bool loop = true )
     {
         if (clip != null)
         {
             if (_lastPlayState != null)
             {
-                _lastPlayState.Unload(_channels);
+                _lastPlayState.Unload(_musicChannels);
                 _lastPlayState.Touch();
             }
 
@@ -109,20 +134,43 @@ public class SoundManager {
             {
                 _lastPlayState.Touch();
             }
-            
-            _currentChannel = (_currentChannel + 1) % _channels.Count;
+
+            _currentMusicChannel = (_currentMusicChannel + 1) % _musicChannels.Count;
 
             _currentPlayState = new PlayState()
             {
-                Channel = _currentChannel,
+                Channel = _currentMusicChannel,
                 Volume = volume,
                 ChangedAt = Time.time,
                 FadeTime = fadeTime,
                 Clip = clip
             };
-            
-            _channels[_currentChannel].clip = clip;
-            _channels[_currentChannel].Play();
+
+            AudioSource source = _musicChannels[_currentMusicChannel];
+            source.clip = clip;
+            source.Play();
+            source.loop = true;
+        }
+    }
+
+    public void PlaySFX(AudioClip clip, float volume)
+    {
+        if (clip != null)
+        {
+            _currentSFXChannel = (_currentSFXChannel + 1) % _sfxChannels.Count;
+
+            AudioSource source = _sfxChannels[_currentSFXChannel];
+            source.clip = clip;
+            source.Play();
+        }
+    }
+
+    public void PlayUISound( UISounds.SoundEvent eventType, float volume = 1f )
+    {
+        AudioClip clip = _uiSounds.FindClipBySoundEvent(eventType);
+        if( clip != null )
+        {
+            PlaySFX(clip, volume);
         }
     }
 }

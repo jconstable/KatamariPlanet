@@ -10,6 +10,7 @@
     public static readonly string AppGameStatesDataPrefabPath = "Data/GameStates";
     public static readonly string LevelDataResourcePath = "Data/Levels";
     public static readonly string PrefabMapResourcePath = "Data/UIMap";
+    public static readonly string UISoundsResourcePath = "Data/Sounds";
 
     // Prefabs
     public static readonly string PrefabDefaultCanvasPath = "Prefabs/UICanvas";

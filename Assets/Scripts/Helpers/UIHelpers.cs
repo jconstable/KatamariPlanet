@@ -4,7 +4,7 @@ using System.Text;
 
 public class UIHelpers {
 
-    public static IEnumerator TweenTextNumberValueCoroutine( UnityEngine.UI.Text textField, float from, float to, float time, string format = "N0" )
+    public static IEnumerator TweenTextNumberValueCoroutine( UnityEngine.UI.Text textField, float from, float to, float time, string format = "N0", System.Action clickCallback = null )
     {
         float diff = to - from;
         float startTime = Time.time;
@@ -15,10 +15,13 @@ public class UIHelpers {
             if( Mathf.Abs( to - temp ) < Mathf.Abs( diff ) )
             {
                 textField.text = temp.ToString(format);
+                if(clickCallback != null )
+                {
+                    clickCallback();
+                }
             }
-            
 
-            yield return null;
+            yield return new WaitForSeconds( 0.1f );
         }
 
         textField.text = to.ToString(format);

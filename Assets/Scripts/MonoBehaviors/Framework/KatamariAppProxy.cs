@@ -4,6 +4,9 @@ using System.Collections;
 // Small proxy MonoBehavior, so we can hook KatamariApp into Unity's player lifecycle
 public class KatamariAppProxy : MonoBehaviour {
 
+    public int NumMusicChannels = 2;
+    public int NumSFXChannels = 8;
+
     private static KatamariApp _app;
 
     // Gross, singletons, but this should be the only one in the game
@@ -21,7 +24,7 @@ public class KatamariAppProxy : MonoBehaviour {
         {
             _app = new KatamariApp();
 
-            _app.Setup( this );
+            _app.Setup( this, NumMusicChannels, NumSFXChannels );
         } else
         {
             // This is a secondary AppProxy, there can be only one

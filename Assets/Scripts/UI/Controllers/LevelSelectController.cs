@@ -94,6 +94,8 @@ public class LevelSelectController {
         LevelData.LevelDefinition levelDef = _app.GetLevelData().FindByLevelID(levelID);
         if( levelDef != null )
         {
+            _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.LevelSelect);
+
             _app.GetFadeUIController().FadeIn(() =>
            {
                _app.GetUIManager().DismissUI(_levelSelectScreenID);

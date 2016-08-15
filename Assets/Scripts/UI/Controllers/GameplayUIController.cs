@@ -16,6 +16,10 @@ public class GameplayUIController {
 
     public int ShowGameplayUI()
     {
-        return _app.GetUIManager().LoadUI(GameplayUIHub.UIKey, null, (int)UILayers.Layers.DefaultUI);
+        PlayerProfile profile = _app.GetPlayerProfile();
+        LevelData.LevelDefinition def = _app.CurrentlySelectedLevel;
+        LevelScore score = profile.GetLevelScore(def.LevelID);
+
+        return _app.GetUIManager().LoadUI(GameplayUIHub.UIKey, score.HighScore, (int)UILayers.Layers.DefaultUI);
     }
 }
