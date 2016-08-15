@@ -16,6 +16,6 @@ public class GameplayUIController {
 
     public int ShowGameplayUI()
     {
-        return _app.GetUIManager().LoadUI(GameplayUIHub.UIKey, 1);
+        return _app.GetUIManager().LoadUI(GameplayUIHub.UIKey, null, (int)UILayers.Layers.DefaultUI);
     }
 }

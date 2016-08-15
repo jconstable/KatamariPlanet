@@ -21,12 +21,15 @@ public class KatamariAppProxy : MonoBehaviour {
         {
             _app = new KatamariApp();
 
-            _app.Setup();
+            _app.Setup( this );
         } else
         {
             // This is a secondary AppProxy, there can be only one
             GameObject.Destroy(gameObject);
         }
+
+        // This instance shall live on
+        GameObject.DontDestroyOnLoad(gameObject);
 	}
 
     void OnDestroy()

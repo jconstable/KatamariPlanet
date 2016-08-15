@@ -12,7 +12,7 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
     [SerializeField]
     private MassUIHub MassUIHub;
 
-	public void Setup(KatamariApp app)
+	public void Setup(KatamariApp app, object param)
     {
         EventManager eventManager = app.GetEventManager();
         LevelScoreHub.Setup(eventManager);

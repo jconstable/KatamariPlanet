@@ -32,7 +32,7 @@ public class UIKeysToPrefabsInspector : Editor
             {
                 if (GUILayout.Button("Load"))
                 {
-                    uiManager.LoadUI(map.UIKey, 0);
+                    uiManager.LoadUI(map.UIKey, null, (int)UILayers.Layers.DefaultUI );
                 }
             } else
             {

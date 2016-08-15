@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 public class UIHelpers {
 
@@ -21,5 +22,35 @@ public class UIHelpers {
         }
 
         textField.text = to.ToString(format);
+    }
+
+    public static string FormatTime( int seconds )
+    {
+        StringBuilder b = new StringBuilder();
+
+        while( seconds > 0 )
+        {
+            int seg = seconds / 60;
+
+            if(b.Length > 0)
+            {
+                b.Insert(0, ":");
+            }
+
+            b.Insert(0, seg.ToString("00"));
+        }
+
+        if( b.Length == 0 )
+        {
+            b.Append(seconds.ToString("00"));
+        }
+
+        // If it's just seoncds, still show 0:XX beacuse it looks nicer
+        if( !b.ToString().Contains(":") )
+        {
+            b.Insert(0, "0:");
+        }
+
+        return b.ToString();
     }
 }
