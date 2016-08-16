@@ -16,30 +16,34 @@ Platform assembly: C:\Users\jconstable\Documents\KatamariPlanet\KatamariPlanet_D
 Loading C:\Users\jconstable\Documents\KatamariPlanet\KatamariPlanet_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\jconstable\Documents\KatamariPlanet\KatamariPlanet_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
 Loading C:\Users\jconstable\Documents\KatamariPlanet\KatamariPlanet_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-- Completed reload, in  0.032 seconds
+- Completed reload, in  0.033 seconds
 Platform assembly: C:\Users\jconstable\Documents\KatamariPlanet\KatamariPlanet_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\jconstable\Documents\KatamariPlanet\KatamariPlanet_Data\Managed\System.dll (this message is harmless)
 desktop: 3840x2160 60Hz; virtual: 7680x2160 at -3840,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.576894 ms
+UnloadTime: 0.608830 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 3ebec -> priority: 1 
-  Thread -> id: 417c0 -> priority: 1 
+  Thread -> id: 468a4 -> priority: 1 
+  Thread -> id: 45ef4 -> priority: 1 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.208223 ms
+UnloadTime: 0.218954 ms
 
-Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 916.
-Total: 0.521197 ms (FindLiveObjects: 0.022483 ms CreateObjectMapping: 0.020439 ms MarkObjects: 0.412870 ms  DeleteObjects: 0.064894 ms)
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 931.
+Total: 0.611896 ms (FindLiveObjects: 0.045477 ms CreateObjectMapping: 0.026570 ms MarkObjects: 0.464734 ms  DeleteObjects: 0.073580 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.246291 ms
+UnloadTime: 0.222531 ms
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 748.
-Total: 0.397796 ms (FindLiveObjects: 0.032447 ms CreateObjectMapping: 0.019161 ms MarkObjects: 0.303521 ms  DeleteObjects: 0.042411 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 763.
+Total: 0.353852 ms (FindLiveObjects: 0.020950 ms CreateObjectMapping: 0.018906 ms MarkObjects: 0.271840 ms  DeleteObjects: 0.041644 ms)
 
 Switching FollowCamera state to Auto
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+0.001523334
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
@@ -59,143 +63,23 @@ Switching FollowCamera state to Auto
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to UserPan
+0.0001271888
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to Auto
+0.1515015
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to UserPan
+0.3310897
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to Auto
+0.001577398
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-0.001881937
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
+0.001785187
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 

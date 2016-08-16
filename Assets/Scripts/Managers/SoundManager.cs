@@ -153,7 +153,7 @@ public class SoundManager {
         }
     }
 
-    public void PlaySFX(AudioClip clip, float volume)
+    public void PlayClip(AudioClip clip, float volume)
     {
         if (clip != null)
         {
@@ -170,7 +170,16 @@ public class SoundManager {
         AudioClip clip = _uiSounds.FindClipBySoundEvent(eventType);
         if( clip != null )
         {
-            PlaySFX(clip, volume);
+            PlayClip(clip, volume);
+        }
+    }
+
+    public void PlayCustomSound( string soundName, float volume = 1f)
+    {
+        AudioClip clip = _uiSounds.FindClipByName(soundName);
+        if (clip != null)
+        {
+            PlayClip(clip, volume);
         }
     }
 }

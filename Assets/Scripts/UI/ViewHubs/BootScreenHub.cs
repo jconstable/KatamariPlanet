@@ -43,6 +43,7 @@ public class BootScreenHub : MonoBehaviour, UIManager.IUIScreen
 
     public void OnClick()
     {
+        _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
         _app.GetEventManager().SendEvent(BootScreenController.BootScreenClickedEventName, TimeBeforeClickEnabled);
     }
 }

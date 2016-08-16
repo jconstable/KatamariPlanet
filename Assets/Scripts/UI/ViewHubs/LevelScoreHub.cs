@@ -44,7 +44,6 @@ public class LevelScoreHub : MonoBehaviour {
 
     void PlayClick()
     {
-        Debug.Log("Click");
         _soundManager.PlayUISound(UISounds.SoundEvent.PointTick);
     }
 }

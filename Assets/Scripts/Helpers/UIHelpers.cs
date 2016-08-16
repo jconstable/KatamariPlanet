@@ -3,6 +3,43 @@ using System.Collections;
 using System.Text;
 
 public class UIHelpers {
+    public static void FadeToUI( KatamariApp app, string uiKey, object param, int layer )
+    {
+        System.Action onFadedIn = () =>
+        {
+            app.GetUIManager().LoadUI(uiKey, param, layer);
+            app.GetFadeUIController().FadeOut(null);
+        };
+
+        if( app.GetFadeUIController().CurrentFadeState == FadeUIController.FadeState.Out )
+        {
+            app.GetFadeUIController().FadeIn(onFadedIn);
+        } else
+        {
+            onFadedIn();
+        }
+    }
+
+    public static void FadeToUIAction( KatamariApp app, System.Action action)
+    {
+        System.Action onFadedIn = () =>
+        {
+            if( action != null )
+            {
+                action();
+            }
+            app.GetFadeUIController().FadeOut(null);
+        };
+
+        if (app.GetFadeUIController().CurrentFadeState == FadeUIController.FadeState.Out)
+        {
+            app.GetFadeUIController().FadeIn(onFadedIn);
+        }
+        else
+        {
+            onFadedIn();
+        }
+    }
 
     public static IEnumerator TweenTextNumberValueCoroutine( UnityEngine.UI.Text textField, float from, float to, float time, string format = "N0", System.Action clickCallback = null )
     {

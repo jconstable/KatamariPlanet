@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelStats { 
+public class LevelStats {
+    public static readonly string LevelSelectedEventName = "LevelSelected";
 
     public static readonly string AddScoreEventName = "LevelStatsAddScoreEventName";
     public static readonly string UpdatedScoreEventName = "LevelStatsUpdatedScoreEventName";

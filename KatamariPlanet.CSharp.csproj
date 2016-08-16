@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Helpers\UILayers.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\BootGameState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\GameState.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\GameStates\LevelSelectState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\PlayGameState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\KatamariApp.cs" />
     <Compile Include="Assets\Scripts\Managers\EventManager\EventManager.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Assets\Scripts\UI\Controllers\LevelSelectController.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\BootScreenHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\FadeUIHub.cs" />
+    <Compile Include="Assets\Scripts\UI\ViewHubs\GameplayResultsUIHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\GameplayUIHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\InstructionsUIHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\LevelScoreHub.cs" />

@@ -8,6 +8,7 @@ public class KatamariAppProxy : MonoBehaviour {
     public int NumSFXChannels = 8;
 
     private static KatamariApp _app;
+    private static KatamariAppProxy _proxyOwner;
 
     // Gross, singletons, but this should be the only one in the game
     public static KatamariApp instance
@@ -20,24 +21,34 @@ public class KatamariAppProxy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (_app == null)
+        if (Application.isPlaying)
         {
-            _app = new KatamariApp();
+            if (_app == null)
+            {
+                _proxyOwner = this;
+                _app = new KatamariApp();
 
-            _app.Setup( this, NumMusicChannels, NumSFXChannels );
-        } else
-        {
-            // This is a secondary AppProxy, there can be only one
-            GameObject.Destroy(gameObject);
+                _app.Setup(this, NumMusicChannels, NumSFXChannels);
+
+                // This instance shall live on
+                GameObject.DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                // This is a secondary AppProxy, there can be only one
+                GameObject.Destroy(gameObject);
+            }
         }
-
-        // This instance shall live on
-        GameObject.DontDestroyOnLoad(gameObject);
 	}
 
     void OnDestroy()
     {
-        _app.Teardown();
+        if(_app != null && _proxyOwner == this)
+        {
+            _app.Teardown();
+            _app = null;
+            _proxyOwner = null;
+        }
     }
 	
 	// Update is called once per frame

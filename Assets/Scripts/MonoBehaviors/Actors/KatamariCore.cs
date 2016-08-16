@@ -13,6 +13,8 @@ public class KatamariCore : MonoBehaviour
 
     public float ScorePerMassMultiplier = 10000f;
 
+    public string SwallowSoundName;
+
     private Rigidbody _rigidBody;
     private KatamariMass _mass;
     private KatamariTracker _tracker;
@@ -25,6 +27,21 @@ public class KatamariCore : MonoBehaviour
     {
         _rigidBody = gameObject.GetComponent<Rigidbody>();
         _mass = gameObject.GetComponent<KatamariMass>();
+
+        KatamariApp app = KatamariAppProxy.instance;
+        if (app != null)
+        {
+            app.GetEventManager().AddListener(PlayGameState.GameplayOverEventName, DisablePhysics );
+        }
+    }
+
+    void OnDestroy()
+    {
+        KatamariApp app = KatamariAppProxy.instance;
+        if (app != null)
+        {
+            app.GetEventManager().RemoveListener(PlayGameState.GameplayOverEventName, DisablePhysics);
+        }
     }
 
     public void SetTracker( KatamariTracker tracker)
@@ -96,6 +113,11 @@ public class KatamariCore : MonoBehaviour
             float score = addition * ScorePerMassMultiplier;
             app.GetEventManager().SendEvent(LevelStats.AddScoreEventName, (int)score);
         }
+
+        if (!string.IsNullOrEmpty(SwallowSoundName))
+        {
+            KatamariAppProxy.instance.GetSoundManager().PlayCustomSound(SwallowSoundName, 0.5f);
+        }
     }
 
     public void OnDrawGizmos()
@@ -103,5 +125,12 @@ public class KatamariCore : MonoBehaviour
         MeshFilter mesh = gameObject.GetComponent<MeshFilter>();
         Bounds b = mesh.sharedMesh.bounds;
         Gizmos.DrawWireCube(transform.position, b.size);
+    }
+
+    public bool DisablePhysics( object o )
+    {
+        _rigidBody.isKinematic = true;
+
+        return false;
     }
 }

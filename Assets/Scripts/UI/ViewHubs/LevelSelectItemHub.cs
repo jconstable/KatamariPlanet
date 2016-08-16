@@ -29,14 +29,16 @@ public class LevelSelectItemHub : MonoBehaviour {
 
     private string _levelID;
     private EventManager _eventManager;
+    private SoundManager _soundManager;
 
-    public void Setup( EventManager eventManager, LevelData.LevelDefinition def, LevelScore score, bool locked )
+    public void Setup( EventManager eventManager, SoundManager soundManager, LevelData.LevelDefinition def, LevelScore score, bool locked )
     {
         LevelNumberLabel.text = def.LevelNumberText;
         LevelNameLabel.text = def.LevelNameText.Replace( "\n", "\n" );
 
         _eventManager = eventManager;
-        
+        _soundManager = soundManager;
+
         if (locked)
         {
             BgSprite.sprite = OffSprite;
@@ -88,7 +90,9 @@ public class LevelSelectItemHub : MonoBehaviour {
     {
         if( !string.IsNullOrEmpty( _levelID ) )
         {
-            _eventManager.SendEvent(LevelSelectController.LevelSelectedEventName, _levelID);
+            _soundManager.PlayUISound(UISounds.SoundEvent.MenuForwards);
+            _soundManager.PlayUISound(UISounds.SoundEvent.LevelSelect);
+            _eventManager.SendEvent(LevelStats.LevelSelectedEventName, _levelID);
         }
     }
 }

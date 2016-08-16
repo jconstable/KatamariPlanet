@@ -44,10 +44,14 @@ public class PlayerProfile {
     public void UpdateLevelScore( string levelID, int newScore )
     {
         LevelScore score = GetLevelScore(levelID);
-
-        if( score.HighScore < newScore )
+        
+        if ( score.HighScore < newScore )
         {
             score.HighScore = newScore;
+            score.NewHighScore = true;
+        } else
+        {
+            score.NewHighScore = false;
         }
     }
 }

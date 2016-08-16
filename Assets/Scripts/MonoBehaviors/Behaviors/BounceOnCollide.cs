@@ -5,6 +5,8 @@ using System.Collections;
 public class BounceOnCollide : MonoBehaviour
 {
     public float Bounciness = 1f;
+    public string ThudSoundName;
+    public float VerticalDotMaxForThud = 0.01f;
 
     private Rigidbody _rigidBody;
     void Start()
@@ -20,6 +22,15 @@ public class BounceOnCollide : MonoBehaviour
             impulse *= -Bounciness;
 
             _rigidBody.AddForce(impulse, ForceMode.Impulse);
+
+            float dot = Vector3.Dot(_rigidBody.velocity.normalized, _rigidBody.transform.position.normalized);
+            if ( dot < VerticalDotMaxForThud )
+            {
+                if (!string.IsNullOrEmpty(ThudSoundName))
+                {
+                    KatamariAppProxy.instance.GetSoundManager().PlayCustomSound(ThudSoundName, 0.5f);
+                }
+            }
         }
     }
 }

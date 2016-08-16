@@ -7,9 +7,6 @@ public class BootScreenController {
 
     private KatamariApp _app;
 
-    private int _bootScreenId;
-    private int _instructionsScreenId;
-
 	public void Setup( KatamariApp app )
     {
         _app = app;
@@ -28,39 +25,23 @@ public class BootScreenController {
 
     public void ShowBootScreen()
     {
-        _bootScreenId = _app.GetUIManager().LoadUI(BootScreenHub.UIKey, null, (int)UILayers.Layers.DefaultUI);
-        _app.GetFadeUIController().FadeOut( null );
-    }
-
-    public void ShowInstructionsScreen()
-    {
-        _instructionsScreenId = _app.GetUIManager().LoadUI(InstructionsUIHub.UIKey, null, (int)UILayers.Layers.DefaultUI);
+        UIHelpers.FadeToUI(_app, BootScreenHub.UIKey, null, (int)UILayers.Layers.DefaultUI);
     }
 
     public bool OnBootScreenClicked( object param )
     {
-        _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
-
-        _app.GetFadeUIController().FadeIn( () =>
-        {
-            _app.GetUIManager().DismissUI(_bootScreenId);
-            ShowInstructionsScreen();
-            _app.GetFadeUIController().FadeOut(null);
-        });
+        UIHelpers.FadeToUI(_app, InstructionsUIHub.UIKey, null, (int)UILayers.Layers.DefaultUI );
 
         return false;
     }
 
     public bool OnInstructionsScreenClicked( object param )
     {
-        _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
-
-        _app.GetFadeUIController().FadeIn(() =>
+        UIHelpers.FadeToUIAction(_app, () =>
         {
-            _app.GetUIManager().DismissUI(_instructionsScreenId);
-            _app.GetLevelSelectController().ShowLevelSelect();
-            _app.GetFadeUIController().FadeOut(null);
+            _app.SwitchToState(typeof(LevelSelectState).ToString());
         });
+
         return false;
     }
 }

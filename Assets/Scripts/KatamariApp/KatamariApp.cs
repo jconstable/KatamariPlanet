@@ -61,15 +61,17 @@ public class KatamariApp {
         _soundManager.Setup(this, musicChannels, sfxChannels);
 
         // Models
-        _levelStats = new LevelStats();
-        _levelStats.Setup(_eventManager);
-
         _levelData = Resources.Load(Files.LevelDataResourcePath) as LevelData;
         Debug.Assert(_levelData != null, "Unable to load LevelData from resource path " + Files.LevelDataResourcePath);
 
         _profile = new PlayerProfile();
         _profile.Setup(_levelData);
 
+        _levelStats = new LevelStats();
+        _levelStats.Setup(_eventManager);
+
+        
+        
         // Controllers
         _gameplayUIController = new GameplayUIController();
         _bootScreenController = new BootScreenController();
@@ -110,6 +112,10 @@ public class KatamariApp {
         if( _soundManager != null )
         {
             _soundManager.OnUpdate(dt);
+        }
+        if( _gameplayUIController != null )
+        {
+            _gameplayUIController.OnUpdate(dt);
         }
     }
 

@@ -10,7 +10,10 @@ public class UISounds : ScriptableObject
         MenuForwards,
         MenuBack,
         LevelSelect,
-        PointTick
+        LevelLeave,
+        PointTick,
+        NewHighScore,
+        StarAwarded
     }
 
     [System.Serializable]

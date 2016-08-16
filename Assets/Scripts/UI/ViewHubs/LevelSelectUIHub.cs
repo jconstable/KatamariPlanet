@@ -12,14 +12,14 @@ public class LevelSelectUIHub : MonoBehaviour, UIManager.IUIScreen {
     public void Setup(KatamariApp app, object param)
     {
         LevelSelectController.LevelSelectParams p = param as LevelSelectController.LevelSelectParams;
-        Popuplate( app.GetEventManager(), p.Sets );
+        Popuplate( app.GetEventManager(), app.GetSoundManager(), p.Sets );
     }
 
     public void Teardown()
     {
     }
 
-    private void Popuplate(EventManager eventManager, List<LevelSelectController.LevelSelectParams.ParamSet> Sets )
+    private void Popuplate(EventManager eventManager, SoundManager soundManager, List<LevelSelectController.LevelSelectParams.ParamSet> Sets )
     {
         // Make sure the template object is deactivated. It exists only for authoring/cloning
         LevelSelectItemTemplate.gameObject.SetActive(false);
@@ -35,7 +35,7 @@ public class LevelSelectUIHub : MonoBehaviour, UIManager.IUIScreen {
 
             // Grab the instance's item component, and set it up
             LevelSelectItemHub item = newCellOb.GetComponent<LevelSelectItemHub>();
-            item.Setup( eventManager, set.levelDef, set.playerScore, set.locked );
+            item.Setup( eventManager, soundManager, set.levelDef, set.playerScore, set.locked );
 
             // Parent the newly created cell to the scroll view
             newCellOb.transform.SetParent(parent, false);

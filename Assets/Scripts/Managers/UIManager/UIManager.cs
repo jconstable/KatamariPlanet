@@ -15,6 +15,7 @@ public class UIManager {
     
     private UIKeysToPrefabs _prefabMap;
     private Dictionary<int, Canvas> _loadedScreens;
+    private Dictionary<int, int> _loadedScreenIdByLayer;
     private int _keyIndex = -1;
 
     private KatamariApp _app;
@@ -39,6 +40,7 @@ public class UIManager {
         Debug.Assert(_canvasPrefab != null, "UIManager: Unable to load default canvas prefab from " + Files.PrefabDefaultCanvasPath);
 
         _loadedScreens = new Dictionary<int, Canvas>();
+        _loadedScreenIdByLayer = new Dictionary<int, int>();
     }
 
     public void Teardown()
@@ -78,8 +80,15 @@ public class UIManager {
 
             if ( screen != null && topRect != null )
             {
+                // Enforce only one screen at a time per layer
+                int currentlyLoadedId = -1;
+                if( _loadedScreenIdByLayer.TryGetValue( layer, out currentlyLoadedId ) )
+                {
+                    DismissUI(currentlyLoadedId);
+                }
+
                 // This screen gets a unique ID
-                id = ++_keyIndex;
+                    id = ++_keyIndex;
 
                 // Create a Canvas for the screen
                 GameObject canvasInstance = GameObject.Instantiate(_canvasPrefab);
@@ -88,6 +97,7 @@ public class UIManager {
                 GameObject.DontDestroyOnLoad(canvasInstance);
 
                 _loadedScreens[id] = canvas;
+                _loadedScreenIdByLayer[layer] = id;
 
                 // Parent the new screen to the canvas
                 screenGO.transform.SetParent(canvas.transform, false );

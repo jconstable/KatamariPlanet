@@ -6,6 +6,8 @@ public class BootGameState : GameState {
     public override void OnEnter(KatamariApp app)
     {
         base.OnEnter(app);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Files.BootstrapSceneName);
         
         Object musicAssetRef = null;
         if( _refs.TryGetValue( "music", out musicAssetRef) )

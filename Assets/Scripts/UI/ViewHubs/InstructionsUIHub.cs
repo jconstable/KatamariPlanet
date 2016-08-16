@@ -18,6 +18,7 @@ public class InstructionsUIHub : MonoBehaviour, UIManager.IUIScreen {
 
     public void OnDismissClick()
     {
+        _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.MenuForwards);
         _app.GetEventManager().SendEvent(BootScreenController.InstructionsScreenClickedEventName, null);
     }
 }

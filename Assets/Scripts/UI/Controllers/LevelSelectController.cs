@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class LevelSelectController {
 
-    public static readonly string LevelSelectedEventName = "LevelSelected";
+    
 
     private KatamariApp _app;
 
@@ -23,21 +23,17 @@ public class LevelSelectController {
     {
         _app = app;
 
-        _app.GetEventManager().AddListener(LevelSelectedEventName, OnLevelSelected);
+        _app.GetEventManager().AddListener(LevelStats.LevelSelectedEventName, OnLevelSelected);
     }
 
     public void Teardown()
     {
-        _app.GetEventManager().RemoveListener(LevelSelectedEventName, OnLevelSelected);
+        _app.GetEventManager().RemoveListener(LevelStats.LevelSelectedEventName, OnLevelSelected);
         _app = null;
     }
 
-    private int _levelSelectScreenID = -1;
-
     public void ShowLevelSelect()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(Files.LevelSelectSceneName);
-
         LevelData data = _app.GetLevelData();
         PlayerProfile profile = _app.GetPlayerProfile();
 
@@ -63,7 +59,7 @@ public class LevelSelectController {
             });
         }
 
-        _levelSelectScreenID = _app.GetUIManager().LoadUI(LevelSelectUIHub.UIKey, param, (int)UILayers.Layers.DefaultUI);
+        _app.GetUIManager().LoadUI(LevelSelectUIHub.UIKey, param, (int)UILayers.Layers.DefaultUI);
     }
 
     // Decide if this level should be locked for the player. 
@@ -94,12 +90,8 @@ public class LevelSelectController {
         LevelData.LevelDefinition levelDef = _app.GetLevelData().FindByLevelID(levelID);
         if( levelDef != null )
         {
-            _app.GetSoundManager().PlayUISound(UISounds.SoundEvent.LevelSelect);
-
-            _app.GetFadeUIController().FadeIn(() =>
+           UIHelpers.FadeToUIAction(_app, () =>
            {
-               _app.GetUIManager().DismissUI(_levelSelectScreenID);
-
                _app.CurrentlySelectedLevel = levelDef;
                _app.SwitchToState(typeof(PlayGameState).ToString());
            });

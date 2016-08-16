@@ -15,6 +15,8 @@ public class Pushable : MonoBehaviour
 
     public Vector3 CurrentPushDir { get; private set; }
 
+    public bool _allowInput = true;
+
     void Start()
     {
         _rigidBody = gameObject.GetComponent<Rigidbody>();
@@ -22,10 +24,30 @@ public class Pushable : MonoBehaviour
 
         _followCam = GameObject.FindObjectOfType<FollowCamera>();
         _initialPositionForReset = _rigidBody.transform.position;
+
+        KatamariApp app = KatamariAppProxy.instance;
+        if( app != null )
+        {
+            app.GetEventManager().AddListener(PlayGameState.GameplayOverEventName, DisableInput );
+        }
+    }
+
+    void OnDestroy()
+    {
+        KatamariApp app = KatamariAppProxy.instance;
+        if (app != null)
+        {
+            app.GetEventManager().RemoveListener(PlayGameState.GameplayOverEventName, DisableInput);
+        }
     }
 
     public void HandlePush(Vector3 cameraFacingInput)
     {
+        if (!_allowInput)
+        {
+            return;
+        }
+
         Quaternion q = Quaternion.identity;
 
         CurrentPushDir = -FollowCamera.GetSurfaceDirToCam(_core, _followCam);
@@ -42,11 +64,21 @@ public class Pushable : MonoBehaviour
 
     public void HandleJump()
     {
-
+        if (!_allowInput)
+        {
+            return;
+        }
     }
 
     public void Reset()
     {
         _rigidBody.transform.position = _initialPositionForReset;
+    }
+
+    public bool DisableInput( object o )
+    {
+        _allowInput = false;
+
+        return false;
     }
 }
