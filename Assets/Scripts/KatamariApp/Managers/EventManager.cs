@@ -33,8 +33,13 @@ public class EventManager {
         _callbacksToRemoveAtEndOfFrame = null;
     }
 
-    public void LateUpdate( float dt )
+    public void LateUpdate(float dt)
     {
+        CleanupRemovedCallbacks();
+    }
+
+    void CleanupRemovedCallbacks()
+    { 
         if( _callbacksToRemoveAtEndOfFrame.Count > 0 )
         {
             for (int i = 0; i < _callbacksToRemoveAtEndOfFrame.Count; ++i)
@@ -54,7 +59,7 @@ public class EventManager {
 
     public void AddListener( string eventName, EventCallback action )
     {
-        Debug.Assert(!string.IsNullOrEmpty(eventName), "Null or empty event name given to EventManager::AddListener");
+        DebugUtils.Assert(!string.IsNullOrEmpty(eventName), "Null or empty event name given to EventManager::AddListener");
         if( !string.IsNullOrEmpty(eventName) )
         {
             // Get the list of listeners, or create it if needed
@@ -92,5 +97,30 @@ public class EventManager {
                 }
             }
         }
+
+        CleanupRemovedCallbacks();
+    }
+
+    public Dictionary<string, int> GetListenerStats()
+    {
+#if UNITY_EDITOR
+        Dictionary<string, int> stats = new Dictionary<string, int>();
+
+        foreach( KeyValuePair< string, List<EventCallback> > pair in _listenersByEventName )
+        {
+            int count = 0;
+
+            if( pair.Value != null )
+            {
+                count = pair.Value.Count;
+            }
+
+            stats[pair.Key] = count;
+        }
+
+        return stats;
+#else
+        return null;
+#endif
     }
 }

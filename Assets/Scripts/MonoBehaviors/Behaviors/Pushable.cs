@@ -6,6 +6,7 @@ public class Pushable : MonoBehaviour
 {
     public float PushForce = 2f;
     public float MaxVelocityMag = 5;
+    public float IncreasedPushByMassFactor = 1f;
 
     private Rigidbody _rigidBody;
     private KatamariCore _core;
@@ -28,7 +29,7 @@ public class Pushable : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if( app != null )
         {
-            app.GetEventManager().AddListener(PlayGameState.GameplayOverEventName, DisableInput );
+            app.GetEventManager().AddListener(LevelPlayState.GameplayOverEventName, DisableInput );
         }
     }
 
@@ -37,7 +38,7 @@ public class Pushable : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if (app != null)
         {
-            app.GetEventManager().RemoveListener(PlayGameState.GameplayOverEventName, DisableInput);
+            app.GetEventManager().RemoveListener(LevelPlayState.GameplayOverEventName, DisableInput);
         }
     }
 
@@ -56,7 +57,8 @@ public class Pushable : MonoBehaviour
         Vector3 cameraCorrectedInput = q * (cameraFacingInput * PushForce );
 
         // Add force if below max speed
-        if (Vector3.Dot(cameraCorrectedInput, _rigidBody.velocity) < ( MaxVelocityMag * _rigidBody.transform.localScale.y ) )
+        float factoredSpeedIncrease = MaxVelocityMag * (_rigidBody.transform.localScale.y * IncreasedPushByMassFactor);
+        if (Vector3.Dot(cameraCorrectedInput, _rigidBody.velocity) < Mathf.Max(MaxVelocityMag, factoredSpeedIncrease ))
         {
             _rigidBody.AddForce(cameraCorrectedInput);
         }

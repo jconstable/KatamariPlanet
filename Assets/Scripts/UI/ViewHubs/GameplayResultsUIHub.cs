@@ -23,20 +23,25 @@ public class GameplayResultsUIHub : MonoBehaviour, UIManager.IUIScreen {
         _app = app;
 
         LevelScore score = param as LevelScore;
-        LevelData.LevelDefinition def = app.GetLevelData().FindByLevelID(score.LevelID);
+        DebugUtils.Assert(score != null, "No LevelScore passed into GameplayResultsUIHub");
 
-        // Start with elements we will fade in set to disabled
-        NewHighScoreLabel.CrossFadeAlpha(0f, 0f, true);
-        ClickAnywhereLabel.CrossFadeAlpha(0f, 0f, true);
-        ClickAnywhereBG.CrossFadeAlpha(0f, 0f, true);
-
-        for (int i = 0; i < StarsOn.Length; ++i)
+        if (score != null)
         {
-            StarsOn[i].CrossFadeAlpha(0f, 0f, true);
-            StarsOff[i].CrossFadeAlpha(0f, 0f, true);
-        }
+            LevelData.LevelDefinition def = app.GetLevelData().FindByLevelID(score.LevelID);
 
-        StartCoroutine(ShowStars(score, def));
+            // Start with elements we will fade in set to disabled
+            NewHighScoreLabel.CrossFadeAlpha(0f, 0f, true);
+            ClickAnywhereLabel.CrossFadeAlpha(0f, 0f, true);
+            ClickAnywhereBG.CrossFadeAlpha(0f, 0f, true);
+
+            for (int i = 0; i < StarsOn.Length; ++i)
+            {
+                StarsOn[i].CrossFadeAlpha(0f, 0f, true);
+                StarsOff[i].CrossFadeAlpha(0f, 0f, true);
+            }
+
+            StartCoroutine(ShowStars(score, def));
+        }
     }
 
     public void Teardown()

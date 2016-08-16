@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class LevelSelectController {
 
-    
-
     private KatamariApp _app;
 
     public class LevelSelectParams
@@ -29,6 +27,7 @@ public class LevelSelectController {
     public void Teardown()
     {
         _app.GetEventManager().RemoveListener(LevelStats.LevelSelectedEventName, OnLevelSelected);
+
         _app = null;
     }
 
@@ -93,7 +92,7 @@ public class LevelSelectController {
            UIHelpers.FadeToUIAction(_app, () =>
            {
                _app.CurrentlySelectedLevel = levelDef;
-               _app.SwitchToState(typeof(PlayGameState).ToString());
+               _app.SwitchToState(typeof(LevelPlayState).ToString());
            });
         }
 

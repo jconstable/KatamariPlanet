@@ -14,6 +14,22 @@ public abstract class GameState {
     public virtual void OnEnter(KatamariApp app)
     {
         _app = app;
+
+        Object musicAssetRef = null;
+        if (_refs.TryGetValue("music", out musicAssetRef))
+        {
+            AudioClip musicAsset = musicAssetRef as AudioClip;
+            DebugUtils.Assert(musicAsset != null, "Unable to cast 'music' asset ref to AudioClip");
+
+            if (musicAsset != null)
+            {
+                _app.GetSoundManager().PlayMusic(musicAsset, 1f, 2f);
+            }
+        }
+        else
+        {
+            Debug.LogWarning(this.GetType().ToString() + ": No music ref definied in game state refs");
+        }
     }
 
     public virtual void OnExit()
@@ -21,5 +37,8 @@ public abstract class GameState {
         _app = null;
     }
 
-    public abstract void OnUpdate(float dt);
+    public virtual void OnUpdate(float dt)
+    {
+
+    }
 }

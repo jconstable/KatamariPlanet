@@ -31,7 +31,7 @@ public class KatamariCore : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if (app != null)
         {
-            app.GetEventManager().AddListener(PlayGameState.GameplayOverEventName, DisablePhysics );
+            app.GetEventManager().AddListener(LevelPlayState.GameplayOverEventName, DisablePhysics );
         }
     }
 
@@ -40,7 +40,7 @@ public class KatamariCore : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if (app != null)
         {
-            app.GetEventManager().RemoveListener(PlayGameState.GameplayOverEventName, DisablePhysics);
+            app.GetEventManager().RemoveListener(LevelPlayState.GameplayOverEventName, DisablePhysics);
         }
     }
 
@@ -85,7 +85,7 @@ public class KatamariCore : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         KatamariMass m = collision.collider.gameObject.GetComponent<KatamariMass>();
-        Debug.Assert(m != null, "Collision with something that doesn't have a KatamariMass. Not good.");
+        DebugUtils.Assert(m != null, "Collision with something that doesn't have a KatamariMass. Not good.");
 
         if( m != null )
         {
@@ -112,12 +112,15 @@ public class KatamariCore : MonoBehaviour
         {
             float score = addition * ScorePerMassMultiplier;
             app.GetEventManager().SendEvent(LevelStats.AddScoreEventName, (int)score);
-        }
 
-        if (!string.IsNullOrEmpty(SwallowSoundName))
-        {
-            KatamariAppProxy.instance.GetSoundManager().PlayCustomSound(SwallowSoundName, 0.5f);
+            if (!string.IsNullOrEmpty(SwallowSoundName))
+            {
+                app.GetSoundManager().PlayCustomSound(SwallowSoundName, 0.5f);
+            }
+
+            app.GetEventManager().SendEvent(LevelStats.SwallowableObjectSwallowedEventName, m.gameObject);
         }
+        
     }
 
     public void OnDrawGizmos()
@@ -129,6 +132,7 @@ public class KatamariCore : MonoBehaviour
 
     public bool DisablePhysics( object o )
     {
+        // Kind of a hack to halt the appearance of physics sim
         _rigidBody.isKinematic = true;
 
         return false;

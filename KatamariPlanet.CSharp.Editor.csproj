@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Editor\AppBootstrap.cs" />
     <Compile Include="Assets\Scripts\Editor\Inspectors\FakeGravityInspector.cs" />
+    <Compile Include="Assets\Scripts\Editor\Inspectors\KatamariAppProxyInspector.cs" />
     <Compile Include="Assets\Scripts\Editor\Inspectors\KatamariMassInspector.cs" />
     <Compile Include="Assets\Scripts\Editor\Inspectors\PushableInspector.cs" />
     <Compile Include="Assets\Scripts\Editor\Inspectors\UIKeysToPrefabsInspector.cs" />

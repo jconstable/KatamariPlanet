@@ -18,15 +18,21 @@ public class LevelScoreHub : MonoBehaviour {
         _eventManager = eventManager;
         _soundManager = soundManager;
 
-        _eventManager.AddListener(LevelStats.UpdatedScoreEventName, UpdateScore);
+        if (_eventManager != null)
+        {
+            _eventManager.AddListener(LevelStats.UpdatedScoreEventName, UpdateScore);
+        }
         
         ScoreLabel.text = 0.ToString("N0");
 	}
 
     public void Teardown()
     {
-        _eventManager.RemoveListener(LevelStats.UpdatedScoreEventName, UpdateScore);
-
+        if(_eventManager != null )
+        {
+            _eventManager.RemoveListener(LevelStats.UpdatedScoreEventName, UpdateScore);
+        }
+        
         _eventManager = null;
         _soundManager = null;
     }

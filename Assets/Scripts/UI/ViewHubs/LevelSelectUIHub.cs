@@ -12,7 +12,12 @@ public class LevelSelectUIHub : MonoBehaviour, UIManager.IUIScreen {
     public void Setup(KatamariApp app, object param)
     {
         LevelSelectController.LevelSelectParams p = param as LevelSelectController.LevelSelectParams;
-        Popuplate( app.GetEventManager(), app.GetSoundManager(), p.Sets );
+        DebugUtils.Assert(p != null, "No LevelSelectParams passed into LevelSelectUIHub");
+
+        if( p != null )
+        {
+            Popuplate(app.GetEventManager(), app.GetSoundManager(), p.Sets);
+        }
     }
 
     public void Teardown()

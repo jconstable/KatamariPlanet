@@ -37,6 +37,9 @@ public class KatamariApp {
     private LevelSelectController _levelSelectController;
     public LevelSelectController GetLevelSelectController() { return _levelSelectController; }
 
+    private PopupUIController _popupUIController;
+    public PopupUIController GetPopupUIController() { return _popupUIController; }
+
     // Game States
     private Dictionary<string, GameState> _appStates;
     private GameState _currentAppState;
@@ -49,6 +52,8 @@ public class KatamariApp {
     // KatamariAppProxy Hooks
     public void Setup( KatamariAppProxy proxy, int musicChannels, int sfxChannels )
     {
+        Application.logMessageReceived += LogMessage;
+
         _proxy = proxy;
 
         // Managers
@@ -62,26 +67,26 @@ public class KatamariApp {
 
         // Models
         _levelData = Resources.Load(Files.LevelDataResourcePath) as LevelData;
-        Debug.Assert(_levelData != null, "Unable to load LevelData from resource path " + Files.LevelDataResourcePath);
+        DebugUtils.Assert(_levelData != null, "Unable to load LevelData from resource path " + Files.LevelDataResourcePath);
 
         _profile = new PlayerProfile();
         _profile.Setup(_levelData);
 
         _levelStats = new LevelStats();
         _levelStats.Setup(_eventManager);
-
-        
         
         // Controllers
         _gameplayUIController = new GameplayUIController();
         _bootScreenController = new BootScreenController();
         _fadeUIController = new FadeUIController();
         _levelSelectController = new LevelSelectController();
+        _popupUIController = new PopupUIController();
 
         _gameplayUIController.Setup(this);
         _bootScreenController.Setup(this);
         _fadeUIController.Setup(this);
         _levelSelectController.Setup(this);
+        _popupUIController.Setup(this);
         
         // Go to first state
         LoadGameStates();
@@ -90,7 +95,11 @@ public class KatamariApp {
 
     public void Teardown()
     {
+        _gameplayUIController.Teardown();
+        _bootScreenController.Teardown();
         _fadeUIController.Teardown();
+        _levelSelectController.Teardown();
+        _popupUIController.Teardown();
 
         _appStates.Clear();
         _appStates = null;
@@ -101,6 +110,8 @@ public class KatamariApp {
 
         _eventManager = null;
         _uiManager = null;
+
+        Application.logMessageReceived -= LogMessage;
     }
 
     public void OnUpdate( float dt )
@@ -112,10 +123,6 @@ public class KatamariApp {
         if( _soundManager != null )
         {
             _soundManager.OnUpdate(dt);
-        }
-        if( _gameplayUIController != null )
-        {
-            _gameplayUIController.OnUpdate(dt);
         }
     }
 
@@ -140,7 +147,7 @@ public class KatamariApp {
             {
                 // A little bit of reflection
                 GameState state = System.Activator.CreateInstance(System.Type.GetType( data.ClassName )) as GameState;
-                Debug.Assert(state != null, "Unable to instantiate IAppState class named " + data.ClassName);
+                DebugUtils.Assert(state != null, "Unable to instantiate IAppState class named " + data.ClassName);
 
                 if (state != null)
                 {
@@ -183,6 +190,19 @@ public class KatamariApp {
         } else
         {
             Debug.Log("Unable to find game state: " + stateName);
+        }
+    }
+
+    void LogMessage( string message, string stackTrace, LogType logType )
+    {
+        if( logType == LogType.Error || logType == LogType.Exception )
+        {
+            _popupUIController.ShowUnhandledExceptionPopup(message, stackTrace);
+
+            Debug.LogError(message);
+        } else
+        {
+            Debug.Log(message);
         }
     }
 }

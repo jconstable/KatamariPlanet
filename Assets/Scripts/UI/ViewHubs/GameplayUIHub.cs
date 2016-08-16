@@ -24,15 +24,19 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
         _app = app;
 
         GameplayUIController.GameplayViewParams gameplayParams = param as GameplayUIController.GameplayViewParams;
+        DebugUtils.Assert(gameplayParams != null, "No gameplayParams passed into GameplayUIHub");
 
-        HighScoreText.text = gameplayParams.HighScore.ToString("N0");
+        if (gameplayParams != null )
+        {
+            HighScoreText.text = gameplayParams.HighScore.ToString("N0");
 
-        LevelScoreHub.Setup(app.GetEventManager(), app.GetSoundManager());
-        MassUIHub.Setup(app.GetEventManager());
+            LevelScoreHub.Setup(app.GetEventManager(), app.GetSoundManager());
+            MassUIHub.Setup(app.GetEventManager());
 
-        UpdateTimeLeft(gameplayParams.TimeLimitSeconds);
+            UpdateTimeLeft(gameplayParams.TimeLimitSeconds);
+        }
 
-        _app.GetEventManager().AddListener( GameplayUIController.UpdatedTimeLeftEventName, UpdateTimeLeft);
+        _app.GetEventManager().AddListener(LevelPlayState.UpdatedTimeLeftEventName, UpdateTimeLeft);
     }
 
     public void Teardown()
@@ -40,7 +44,7 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
         LevelScoreHub.Teardown();
         MassUIHub.Teardown();
 
-        _app.GetEventManager().RemoveListener(GameplayUIController.UpdatedTimeLeftEventName, UpdateTimeLeft);
+        _app.GetEventManager().RemoveListener(LevelPlayState.UpdatedTimeLeftEventName, UpdateTimeLeft);
         _app = null;
     }
 

@@ -17,7 +17,7 @@ public class Jumpable : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if (app != null)
         {
-            app.GetEventManager().AddListener(PlayGameState.GameplayOverEventName, DisableInput);
+            app.GetEventManager().AddListener(LevelPlayState.GameplayOverEventName, DisableInput);
         }
     }
 
@@ -26,7 +26,7 @@ public class Jumpable : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if (app != null)
         {
-            app.GetEventManager().RemoveListener(PlayGameState.GameplayOverEventName, DisableInput);
+            app.GetEventManager().RemoveListener(LevelPlayState.GameplayOverEventName, DisableInput);
         }
     }
 

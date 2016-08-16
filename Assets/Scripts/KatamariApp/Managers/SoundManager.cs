@@ -58,7 +58,7 @@ public class SoundManager {
         }
 
         _uiSounds = Resources.Load(Files.UISoundsResourcePath) as UISounds;
-        Debug.Assert(_uiSounds != null, "Unable to load UI sounds at resource path: " + Files.UISoundsResourcePath);
+        DebugUtils.Assert(_uiSounds != null, "Unable to load UI sounds at resource path: " + Files.UISoundsResourcePath);
     }
 
     public void Teardown()

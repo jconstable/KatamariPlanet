@@ -11,8 +11,8 @@ public class MouseInput : MonoBehaviour
     {
         _jumpable = gameObject.GetComponent<Jumpable>();
         _followCamera = GameObject.FindObjectOfType<FollowCamera>();
-        
-        Debug.Assert(_followCamera != null, "KeyboardInput: No follow camera exists in the scene");
+
+        DebugUtils.Assert(_followCamera != null, "KeyboardInput: No follow camera exists in the scene");
     }
 
     void UpdateJumpable()

@@ -21,9 +21,15 @@ public class KatamariMass : MonoBehaviour
         KatamariApp app = KatamariAppProxy.instance;
         if(app != null)
         {
-            app.GetEventManager().AddListener(KatamariCore.MassChangedEventName, CompareMass);
+            EventManager events = app.GetEventManager();
+            events.AddListener(KatamariCore.MassChangedEventName, CompareMass);
+
+            // If it's something we can swallow, notify the game stats
+            if (gameObject.tag != Tags.PlanetTag && gameObject.tag != Tags.KatamariBallTag)
+            {
+                events.SendEvent(LevelStats.SwallowableObjectAddedEventName, gameObject);
+            }
         }
-        
     }
 
     void OnDisable()

@@ -4,12 +4,17 @@ using System.Collections;
 public class LevelStats {
     public static readonly string LevelSelectedEventName = "LevelSelected";
 
+    public static readonly string SwallowableObjectAddedEventName = "SwallowableObjectAdded";
+    public static readonly string SwallowableObjectSwallowedEventName = "SwallowableObjectSwallowed";
+
     public static readonly string AddScoreEventName = "LevelStatsAddScoreEventName";
     public static readonly string UpdatedScoreEventName = "LevelStatsUpdatedScoreEventName";
     public static readonly string UpdatedMassEventName = "LevelStatsUpdatedMassEventName";
 
     public int CurrentScore = 0;
     public float CurrentMass = 0;
+
+    public int RemainingObjects { get; private set; }
 
     private EventManager _eventManager;
 
@@ -18,13 +23,50 @@ public class LevelStats {
         _eventManager = eventManager;
         _eventManager.AddListener(AddScoreEventName, ScoreAdded);
         _eventManager.AddListener(KatamariCore.MassChangedEventName, UpdateMass);
+        _eventManager.AddListener(SwallowableObjectAddedEventName, AddSwallowableObject);
+        _eventManager.AddListener(SwallowableObjectSwallowedEventName, ObjectSwallowed);
     }
 
     public void Teardown()
     {
         _eventManager.RemoveListener(AddScoreEventName, ScoreAdded);
         _eventManager.RemoveListener(KatamariCore.MassChangedEventName, UpdateMass);
+        _eventManager.RemoveListener(SwallowableObjectAddedEventName, AddSwallowableObject);
+        _eventManager.RemoveListener(SwallowableObjectSwallowedEventName, ObjectSwallowed);
+
         _eventManager = null;
+    }
+
+    public void Reset()
+    {
+        CurrentScore = 0;
+        CurrentMass = 0;
+        RemainingObjects = 0;
+    }
+
+    bool AddSwallowableObject( object p )
+    {
+        RemainingObjects++;
+
+        GameObject o = p as GameObject;
+        Debug.Log("Added swallowable object " + RemainingObjects.ToString() + ": " + o.name);
+
+        return false;
+    }
+
+    bool ObjectSwallowed(object p)
+    {
+        RemainingObjects--;
+
+        GameObject o = p as GameObject;
+        Debug.Log("Swallowed object: " + o.name + ", " + RemainingObjects.ToString() + " remain");
+
+        if( RemainingObjects == 0 )
+        {
+            _eventManager.SendEvent(LevelPlayState.GameplayOverEventName, null);
+        }
+
+        return false;
     }
 
     bool ScoreAdded( object p )

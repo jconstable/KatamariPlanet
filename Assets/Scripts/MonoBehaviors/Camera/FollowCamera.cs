@@ -49,7 +49,7 @@ public class FollowCamera : MonoBehaviour
     void Start()
     {
         _katamariCore = GameObject.FindObjectOfType<KatamariCore>();
-        Debug.Assert(_katamariCore != null, "Could not find a GameObject with a KatamariCore component in scene!");
+        DebugUtils.Assert(_katamariCore != null, "Could not find a GameObject with a KatamariCore component in scene!");
 
         // Instatniate the camera states
         _states = new Dictionary<FollowState, IFollowCameraState>((int)FollowState._NumStates)

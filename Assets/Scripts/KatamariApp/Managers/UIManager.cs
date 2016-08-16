@@ -25,7 +25,7 @@ public class UIManager {
         _app = app;
 
         GameObject eventSystemPrefab = Resources.Load(Files.PrefabDefaultUIEventSystemPath) as GameObject;
-        Debug.Assert(eventSystemPrefab != null, "UIManager: Unable to EventSystem prefab from " + Files.PrefabDefaultUIEventSystemPath);
+        DebugUtils.Assert(eventSystemPrefab != null, "UIManager: Unable to EventSystem prefab from " + Files.PrefabDefaultUIEventSystemPath);
         if (eventSystemPrefab != null)
         {
             _eventSystem = GameObject.Instantiate(eventSystemPrefab);
@@ -34,10 +34,10 @@ public class UIManager {
 
         // Load UI data
         _prefabMap = Resources.Load(Files.PrefabMapResourcePath) as UIKeysToPrefabs;
-        Debug.Assert(_prefabMap != null, "UIManager: Unable to load prefab map from " + Files.PrefabMapResourcePath);
+        DebugUtils.Assert(_prefabMap != null, "UIManager: Unable to load prefab map from " + Files.PrefabMapResourcePath);
 
         _canvasPrefab = Resources.Load(Files.PrefabDefaultCanvasPath) as GameObject;
-        Debug.Assert(_canvasPrefab != null, "UIManager: Unable to load default canvas prefab from " + Files.PrefabDefaultCanvasPath);
+        DebugUtils.Assert(_canvasPrefab != null, "UIManager: Unable to load default canvas prefab from " + Files.PrefabDefaultCanvasPath);
 
         _loadedScreens = new Dictionary<int, Canvas>();
         _loadedScreenIdByLayer = new Dictionary<int, int>();
@@ -65,7 +65,7 @@ public class UIManager {
     public int LoadUI( string UIKey, object param, int layer )
     {
         GameObject prefab = _prefabMap.GetPrefabForUIKey(UIKey);
-        Debug.Assert(prefab != null, "UIManager: Unable to load UI by key " + UIKey);
+        DebugUtils.Assert(prefab != null, "UIManager: Unable to load UI by key " + UIKey);
 
         int id = -1;
         
@@ -73,10 +73,10 @@ public class UIManager {
         {
             GameObject screenGO = GameObject.Instantiate(prefab);
             IUIScreen screen = screenGO.GetComponent<IUIScreen>();
-            Debug.Assert(screen != null, "UIManager: Loaded UI prefab does not contain a IUIScreen implementor");
+            DebugUtils.Assert(screen != null, "UIManager: Loaded UI prefab does not contain a IUIScreen implementor");
 
             RectTransform topRect = screenGO.GetComponent<RectTransform>();
-            Debug.Assert(topRect != null, "UIManager: Loaded UI prefab does contain a RectTransform. Is it really a UI screen?");
+            DebugUtils.Assert(topRect != null, "UIManager: Loaded UI prefab does contain a RectTransform. Is it really a UI screen?");
 
             if ( screen != null && topRect != null )
             {

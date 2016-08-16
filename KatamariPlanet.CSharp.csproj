@@ -67,21 +67,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Lava_Flowing_Shader\Scripts\ScrollingUVs_Layers.cs" />
+    <Compile Include="Assets\Scripts\Helpers\DebugUtils.cs" />
     <Compile Include="Assets\Scripts\Helpers\Files.cs" />
     <Compile Include="Assets\Scripts\Helpers\Tags.cs" />
     <Compile Include="Assets\Scripts\Helpers\UIHelpers.cs" />
     <Compile Include="Assets\Scripts\Helpers\UILayers.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\BootGameState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\GameState.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\GameStates\LevelPlayState.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\GameStates\LevelResultsState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\GameStates\LevelSelectState.cs" />
-    <Compile Include="Assets\Scripts\KatamariApp\GameStates\PlayGameState.cs" />
     <Compile Include="Assets\Scripts\KatamariApp\KatamariApp.cs" />
-    <Compile Include="Assets\Scripts\Managers\EventManager\EventManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\UIManager\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Models\LevelScore.cs" />
-    <Compile Include="Assets\Scripts\Models\LevelStats.cs" />
-    <Compile Include="Assets\Scripts\Models\PlayerProfile.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\Managers\EventManager.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\Managers\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\Managers\UIManager.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\Models\LevelScore.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\Models\LevelStats.cs" />
+    <Compile Include="Assets\Scripts\KatamariApp\Models\PlayerProfile.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Actors\FakeGravity.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Actors\KatamariCore.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviors\Actors\KatamariTracker.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Assets\Scripts\UI\Controllers\FadeUIController.cs" />
     <Compile Include="Assets\Scripts\UI\Controllers\GameplayUIController.cs" />
     <Compile Include="Assets\Scripts\UI\Controllers\LevelSelectController.cs" />
+    <Compile Include="Assets\Scripts\UI\Controllers\PopupUIController.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\BootScreenHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\FadeUIHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\GameplayResultsUIHub.cs" />
@@ -113,6 +116,7 @@
     <Compile Include="Assets\Scripts\UI\ViewHubs\LevelSelectItemHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\LevelSelectUIHub.cs" />
     <Compile Include="Assets\Scripts\UI\ViewHubs\MassUIHub.cs" />
+    <Compile Include="Assets\Scripts\UI\ViewHubs\UnhandledExceptionHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Lava_Flowing_Shader\ReadMe.txt" />
