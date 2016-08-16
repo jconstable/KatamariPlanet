@@ -23,27 +23,41 @@ desktop: 3840x2160 60Hz; virtual: 7680x2160 at -3840,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.608830 ms
+UnloadTime: 4.287618 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 468a4 -> priority: 1 
-  Thread -> id: 45ef4 -> priority: 1 
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.218954 ms
+  Thread -> id: 4bdc8 -> priority: 1 
+  Thread -> id: 4a4c0 -> priority: 1 
+UnloadTime: 0.215121 ms
 
-Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 931.
-Total: 0.611896 ms (FindLiveObjects: 0.045477 ms CreateObjectMapping: 0.026570 ms MarkObjects: 0.464734 ms  DeleteObjects: 0.073580 ms)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 689.
+Total: 7.406629 ms (FindLiveObjects: 0.021972 ms CreateObjectMapping: 0.024526 ms MarkObjects: 7.345312 ms  DeleteObjects: 0.014562 ms)
 
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.222531 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.226107 ms
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 763.
-Total: 0.353852 ms (FindLiveObjects: 0.020950 ms CreateObjectMapping: 0.018906 ms MarkObjects: 0.271840 ms  DeleteObjects: 0.041644 ms)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1072.
+Total: 0.625692 ms (FindLiveObjects: 0.030147 ms CreateObjectMapping: 0.022483 ms MarkObjects: 0.497948 ms  DeleteObjects: 0.074602 ms)
 
-Switching FollowCamera state to Auto
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.253700 ms
+Added swallowable object 1: TinyCube (1)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-0.001523334
+Added swallowable object 2: Cube
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Added swallowable object 3: TinyCube
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 819.
+Total: 0.435353 ms (FindLiveObjects: 0.029892 ms CreateObjectMapping: 0.021716 ms MarkObjects: 0.336734 ms  DeleteObjects: 0.046754 ms)
+
+Switching FollowCamera state to Auto
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
@@ -51,43 +65,29 @@ Switching FollowCamera state to UserPan
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to Auto
+Swallowed object: TinyCube::1.385641ccm X, 2 remain
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Switching FollowCamera state to UserPan
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to Auto
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-0.0001271888
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-0.1515015
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-0.3310897
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-0.001577398
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-0.001785187
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Switching FollowCamera state to UserPan
+Swallowed object: TinyCube (1)::1.385641ccm X, 1 remain
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Switching FollowCamera state to Auto
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Swallowed object: Cube::2.078461ccm X, 0 remain
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+LevelResultsState: No music ref definied in game state refs
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.419992 ms
+
+Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 1074.
+Total: 0.843369 ms (FindLiveObjects: 0.041644 ms CreateObjectMapping: 0.023249 ms MarkObjects: 0.573062 ms  DeleteObjects: 0.204646 ms)
 

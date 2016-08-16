@@ -21,7 +21,6 @@ public class SoundManager {
         public void Unload(List<AudioSource> channels)
         {
             channels[Channel].Stop();
-            Resources.UnloadAsset(Clip);
             Clip = null;
             channels[Channel].clip = null;
         }

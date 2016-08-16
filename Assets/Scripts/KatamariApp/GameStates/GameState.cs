@@ -19,6 +19,11 @@ public abstract class GameState {
         if (_refs.TryGetValue("music", out musicAssetRef))
         {
             AudioClip musicAsset = musicAssetRef as AudioClip;
+            if( musicAsset == null )
+            {
+                Debug.Log("Hmm");
+
+            }
             DebugUtils.Assert(musicAsset != null, "Unable to cast 'music' asset ref to AudioClip");
 
             if (musicAsset != null)
