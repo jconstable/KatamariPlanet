@@ -10,6 +10,7 @@ public class KatamariCore : MonoBehaviour
     public float SizeComparisonFactor = 0.5f;
     public float SwallowScaleAdditionFactor = 0.1f;
     public float GrowthAnimationFactor = 0.1f;
+    public float Gravity = -9.8f;
 
     public float ScorePerMassMultiplier = 10000f;
 
@@ -52,7 +53,8 @@ public class KatamariCore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Physics.gravity = transform.position.normalized * -9.8f;
+        // Update gravity for the entire physics model
+        Physics.gravity = transform.position.normalized * Gravity;
 
 
         if( _lastMass < _mass.Mass )
