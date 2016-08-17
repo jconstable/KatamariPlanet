@@ -15,6 +15,8 @@ public class LevelData : ScriptableObject
         public string LevelNumberText;
         public string LevelNameText;
 
+        public int BonusPointsPerSecondRemaining = 10;
+
         public string DependentLevelID;
         public int RequiredStarsInDependencyLevel;
     }

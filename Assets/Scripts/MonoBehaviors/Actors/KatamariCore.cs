@@ -117,7 +117,7 @@ public class KatamariCore : MonoBehaviour
 
             if (!string.IsNullOrEmpty(SwallowSoundName))
             {
-                app.GetSoundManager().PlayCustomSound(SwallowSoundName, 0.5f);
+                app.GetSoundManager().PlayCustomSound(SwallowSoundName);
             }
 
             app.GetEventManager().SendEvent(LevelStats.SwallowableObjectSwallowedEventName, m.gameObject);

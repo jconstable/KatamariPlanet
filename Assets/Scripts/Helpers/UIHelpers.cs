@@ -41,7 +41,7 @@ public class UIHelpers {
         }
     }
 
-    public static IEnumerator TweenTextNumberValueCoroutine( UnityEngine.UI.Text textField, float from, float to, float time, string format = "N0", System.Action clickCallback = null )
+    public static IEnumerator TweenTextNumberValueCoroutine(UnityEngine.UI.Text textField, float from, float to, float time, string format = "N0", System.Action clickCallback = null, float updateInterval = 0.05f)
     {
         float diff = to - from;
         float startTime = Time.time;
@@ -58,7 +58,7 @@ public class UIHelpers {
                 }
             }
 
-            yield return new WaitForSeconds( 0.1f );
+            yield return new WaitForSeconds(updateInterval);
         }
 
         textField.text = to.ToString(format);

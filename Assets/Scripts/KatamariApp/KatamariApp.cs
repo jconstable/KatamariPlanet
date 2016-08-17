@@ -73,7 +73,7 @@ public class KatamariApp {
         _profile.Setup(_levelData);
 
         _levelStats = new LevelStats();
-        _levelStats.Setup(_eventManager);
+        _levelStats.Setup(_eventManager,_soundManager);
         
         // Controllers
         _gameplayUIController = new GameplayUIController();

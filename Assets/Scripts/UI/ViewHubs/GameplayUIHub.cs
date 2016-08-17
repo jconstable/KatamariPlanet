@@ -17,7 +17,19 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
     [SerializeField]
     private UnityEngine.UI.Text TimerText;
 
+    [SerializeField]
+    private UnityEngine.UI.Graphic ProgressBarFill;
+    private RectTransform ProgressBarRect;
+
+    [SerializeField]
+    private Color ProgressBarFull;
+    [SerializeField]
+    private Color ProgressBarEmpty;
+
     private KatamariApp _app;
+    private float _progressBarFullWidth = 0f;
+    private float _totalTime = 0f;
+    private float _startTime = 0;
 
 	public void Setup(KatamariApp app, object param)
     {
@@ -33,7 +45,12 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
             LevelScoreHub.Setup(app.GetEventManager(), app.GetSoundManager());
             MassUIHub.Setup(app.GetEventManager());
 
+            _totalTime = (float)gameplayParams.TimeLimitSeconds;
             UpdateTimeLeft(gameplayParams.TimeLimitSeconds);
+
+            ProgressBarRect = ProgressBarFill.GetComponent<RectTransform>();
+            _progressBarFullWidth = (float)(ProgressBarRect.rect.width);
+            _startTime = Time.time;
         }
 
         _app.GetEventManager().AddListener(LevelPlayState.UpdatedTimeLeftEventName, UpdateTimeLeft);
@@ -46,6 +63,13 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
 
         _app.GetEventManager().RemoveListener(LevelPlayState.UpdatedTimeLeftEventName, UpdateTimeLeft);
         _app = null;
+    }
+
+    void Update()
+    {
+        float t = (Time.time - _startTime) / _totalTime;
+        ProgressBarFill.color = Color.Lerp(ProgressBarFull, ProgressBarEmpty, t);
+        ProgressBarRect.sizeDelta = new Vector2(-_progressBarFullWidth * t, 1f);
     }
 
     public bool UpdateTimeLeft( object p )
@@ -70,7 +94,7 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
         }
 
         TimerText.text = UIHelpers.FormatTime(timeLeft);
-
+     
         return false;
     }
 }

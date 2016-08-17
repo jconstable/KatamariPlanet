@@ -5,7 +5,7 @@ using System.Collections;
 public class Jumpable : MonoBehaviour
 {
     public float JumpForce = 2f;
-    public float VerticalDotMax = 0.01f;
+    public float DistanceToJumpableSurfaceImprecision = 0.1f;
 
     private Rigidbody _rigidBody;
     private bool _allowInput = true;
@@ -37,11 +37,20 @@ public class Jumpable : MonoBehaviour
             return;
         }
 
-        float dot = Vector3.Dot(_rigidBody.velocity.normalized, _rigidBody.transform.position.normalized);
-        Debug.Log(Mathf.Abs(dot).ToString());
-        if ( Mathf.Abs(dot) < VerticalDotMax)
+        // Cast a ray straight "down", and see if the collider hit is directly underneath us (touching)
+        RaycastHit info;
+        if( Physics.Raycast( _rigidBody.position, -_rigidBody.position.normalized, out info ) )
         {
-            _rigidBody.AddForce(_rigidBody.transform.position.normalized * JumpForce, ForceMode.Impulse);
+            float radius = _rigidBody.transform.lossyScale.y * 0.5f;
+            if ( Mathf.Abs( info.distance - radius) < DistanceToJumpableSurfaceImprecision )
+            {
+                KatamariApp app = KatamariAppProxy.instance;
+                if (app != null)
+                {
+                    app.GetSoundManager().PlayCustomSound("Jump");
+                }
+                _rigidBody.AddForce(_rigidBody.transform.position.normalized * JumpForce, ForceMode.Impulse);
+            }
         }
     }
 

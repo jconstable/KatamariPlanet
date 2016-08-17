@@ -7,7 +7,7 @@ public class LevelResultsState : GameState {
         base.OnEnter( app );
 
         LevelStats stats = app.GetLevelStats();
-        _app.GetPlayerProfile().UpdateLevelScore(_app.CurrentlySelectedLevel.LevelID, stats.CurrentScore);
+        _app.GetPlayerProfile().UpdateLevelScore(_app.CurrentlySelectedLevel.LevelID, stats.CurrentScore, stats.SecondsLeft);
 
         _app.GetGameplayUIController().ShowGameplayResultsUI();
     }

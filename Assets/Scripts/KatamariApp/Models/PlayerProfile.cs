@@ -5,9 +5,11 @@ using System.Collections.Generic;
 public class PlayerProfile {
 
     private Dictionary<string, LevelScore> _levelScores;
+    private LevelData _levelData;
     
     public void Setup( LevelData levels )
     {
+        _levelData = levels;
         _levelScores = new Dictionary<string, LevelScore>();
 
         SetupLevelData(levels);
@@ -22,7 +24,10 @@ public class PlayerProfile {
             LevelScore score = new LevelScore()
             {
                 LevelID = def.LevelID,
-                HighScore = 0
+                BaseScore = 0,
+                TotalScore = 0,
+                BonusScore = 0,
+                TimeRemaining = 0
             };
 
             _levelScores.Add(def.LevelID, score);
@@ -41,13 +46,21 @@ public class PlayerProfile {
         return score;
     }
 
-    public void UpdateLevelScore( string levelID, int newScore )
+    public void UpdateLevelScore( string levelID, int baseScore, int timeRemaining )
     {
+        LevelData.LevelDefinition def = _levelData.FindByLevelID(levelID);
         LevelScore score = GetLevelScore(levelID);
-        
-        if ( score.HighScore < newScore )
+
+        // Calculate bonus
+        int bonus = timeRemaining * def.BonusPointsPerSecondRemaining;
+        int total = bonus + baseScore;
+
+        if ( score.TotalScore < total)
         {
-            score.HighScore = newScore;
+            score.BaseScore = baseScore;
+            score.BonusScore = bonus;
+            score.TotalScore = total;
+            score.TimeRemaining = timeRemaining;
             score.NewHighScore = true;
         } else
         {

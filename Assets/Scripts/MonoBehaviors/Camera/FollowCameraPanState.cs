@@ -2,6 +2,8 @@
 
 public class FollowCameraPanState : FollowCamera.IFollowCameraState
 {
+    public float MouseSensitivity = 0.3f;
+
     private FollowCamera _cam;
     private KatamariCore _core;
 
@@ -29,7 +31,7 @@ public class FollowCameraPanState : FollowCamera.IFollowCameraState
     public void Update(float dt)
     {
         Vector3 dirToCam = FollowCamera.GetSurfaceDirToCam(_core, _cam);
-        float dragX = Input.mousePosition.x - _mouseDragLastPos.x;
+        float dragX = ( Input.mousePosition.x - _mouseDragLastPos.x ) * MouseSensitivity;
 
         // Figure out the number of radians to rotate
         _totalDrag += dragX;

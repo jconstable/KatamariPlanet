@@ -73,7 +73,7 @@ public class LevelSelectController {
         {
             LevelData.LevelDefinition dependencyDef = data.FindByLevelID(def.DependentLevelID);
             LevelScore dependency = player.GetLevelScore(def.DependentLevelID);
-            if (dependency.HighScore > dependencyDef.StarPointRequirements[def.RequiredStarsInDependencyLevel])
+            if (dependency.TotalScore > dependencyDef.StarPointRequirements[def.RequiredStarsInDependencyLevel])
             {
                 locked = false;
             }

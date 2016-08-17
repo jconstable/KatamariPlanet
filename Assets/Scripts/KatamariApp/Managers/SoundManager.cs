@@ -118,7 +118,7 @@ public class SoundManager {
     }
 
 
-    public void PlayMusic( AudioClip clip, float volume, float fadeTime = 0f, bool loop = true )
+    public void PlayMusic( AudioClip clip, float volume = 0.5f, float fadeTime = 0f, bool loop = true )
     {
         if (clip != null)
         {
@@ -159,12 +159,13 @@ public class SoundManager {
             _currentSFXChannel = (_currentSFXChannel + 1) % _sfxChannels.Count;
 
             AudioSource source = _sfxChannels[_currentSFXChannel];
+            source.volume = volume;
             source.clip = clip;
             source.Play();
         }
     }
 
-    public void PlayUISound( UISounds.SoundEvent eventType, float volume = 1f )
+    public void PlayUISound( UISounds.SoundEvent eventType, float volume = 0.2f )
     {
         AudioClip clip = _uiSounds.FindClipBySoundEvent(eventType);
         if( clip != null )
@@ -173,7 +174,7 @@ public class SoundManager {
         }
     }
 
-    public void PlayCustomSound( string soundName, float volume = 1f)
+    public void PlayCustomSound( string soundName, float volume = 0.3f)
     {
         AudioClip clip = _uiSounds.FindClipByName(soundName);
         if (clip != null)

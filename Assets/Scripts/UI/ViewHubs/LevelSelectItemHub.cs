@@ -58,13 +58,13 @@ public class LevelSelectItemHub : MonoBehaviour {
 
             BgSprite.sprite = OnSprite;
 
-            if (score.HighScore == 0)
+            if (score.TotalScore == 0)
             {
                 HighScoreLabel.text = EmptyScoreText;
             }
             else
             {
-                HighScoreLabel.text = score.HighScore.ToString("N0");
+                HighScoreLabel.text = score.TotalScore.ToString("N0");
             }
 
             TimeLabel.text = UIHelpers.FormatTime(def.TimeDuration);
@@ -74,7 +74,7 @@ public class LevelSelectItemHub : MonoBehaviour {
             {
                 if (i < def.StarPointRequirements.Length)
                 {
-                    if (def.StarPointRequirements[i] > score.HighScore)
+                    if (def.StarPointRequirements[i] > score.TotalScore)
                     {
                         StarForegrounds[i].enabled = false;
                     }

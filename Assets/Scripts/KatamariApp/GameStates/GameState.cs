@@ -28,7 +28,7 @@ public abstract class GameState {
 
             if (musicAsset != null)
             {
-                _app.GetSoundManager().PlayMusic(musicAsset, 1f, 2f);
+                _app.GetSoundManager().PlayMusic(musicAsset, 0.2f, 2f);
             }
         }
         else

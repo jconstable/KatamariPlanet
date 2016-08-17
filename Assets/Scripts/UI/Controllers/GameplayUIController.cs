@@ -33,7 +33,7 @@ public class GameplayUIController {
 
         GameplayViewParams p = new GameplayViewParams()
         {
-            HighScore = score.HighScore,
+            HighScore = score.TotalScore,
             TimeLimitSeconds = def.TimeDuration
         };
 

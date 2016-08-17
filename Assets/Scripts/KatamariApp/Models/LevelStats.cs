@@ -15,16 +15,20 @@ public class LevelStats {
     public float CurrentMass = 0;
 
     public int RemainingObjects { get; private set; }
+    public int SecondsLeft { get; private set; }
 
     private EventManager _eventManager;
+    private SoundManager _soundManager;
 
-    public void Setup( EventManager eventManager )
+    public void Setup( EventManager eventManager, SoundManager soundManager )
     {
         _eventManager = eventManager;
+        _soundManager = soundManager;
         _eventManager.AddListener(AddScoreEventName, ScoreAdded);
         _eventManager.AddListener(KatamariCore.MassChangedEventName, UpdateMass);
         _eventManager.AddListener(SwallowableObjectAddedEventName, AddSwallowableObject);
         _eventManager.AddListener(SwallowableObjectSwallowedEventName, ObjectSwallowed);
+        _eventManager.AddListener(LevelPlayState.UpdatedTimeLeftEventName, UpdateSecondsLeft);
     }
 
     public void Teardown()
@@ -33,8 +37,10 @@ public class LevelStats {
         _eventManager.RemoveListener(KatamariCore.MassChangedEventName, UpdateMass);
         _eventManager.RemoveListener(SwallowableObjectAddedEventName, AddSwallowableObject);
         _eventManager.RemoveListener(SwallowableObjectSwallowedEventName, ObjectSwallowed);
+        _eventManager.RemoveListener(LevelPlayState.UpdatedTimeLeftEventName, UpdateSecondsLeft);
 
         _eventManager = null;
+        _soundManager = null;
     }
 
     public void Reset()
@@ -63,6 +69,7 @@ public class LevelStats {
 
         if( RemainingObjects == 0 )
         {
+            _soundManager.PlayCustomSound("Tada");
             _eventManager.SendEvent(LevelPlayState.GameplayOverEventName, null);
         }
 
@@ -87,6 +94,13 @@ public class LevelStats {
 
         // Notify the game that the new mass has been calculated
         _eventManager.SendEvent(UpdatedMassEventName, CurrentMass);
+
+        return false;
+    }
+
+    bool UpdateSecondsLeft( object p )
+    {
+        SecondsLeft = (int)p;
 
         return false;
     }

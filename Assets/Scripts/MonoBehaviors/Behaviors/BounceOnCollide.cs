@@ -28,7 +28,7 @@ public class BounceOnCollide : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(ThudSoundName))
                 {
-                    KatamariAppProxy.instance.GetSoundManager().PlayCustomSound(ThudSoundName, 0.5f);
+                    KatamariAppProxy.instance.GetSoundManager().PlayCustomSound(ThudSoundName);
                 }
             }
         }
