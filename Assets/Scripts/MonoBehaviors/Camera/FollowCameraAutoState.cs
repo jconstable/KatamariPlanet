@@ -14,7 +14,6 @@ public class FollowCameraAutoState : FollowCamera.IFollowCameraState
 
     public void OnEnter()
     {
-
     }
 
     public void OnExit()
@@ -26,7 +25,7 @@ public class FollowCameraAutoState : FollowCamera.IFollowCameraState
     {
         // Figure out what direction the camera should be from the ball
         Vector3 dirToCam = FollowCamera.GetSurfaceDirToCam(_core, _cam);
-        
-        _cam.SetNewPositioning(dirToCam);
+
+        _cam.SetNewPositioning(dirToCam,true);
     }
 }

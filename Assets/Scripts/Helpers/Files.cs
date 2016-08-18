@@ -16,4 +16,7 @@
     public static readonly string PrefabDefaultCanvasPath = "Prefabs/UICanvas";
     public static readonly string PrefabDefaultUIEventSystemPath = "Prefabs/EventSystem";
 
+    // Save data
+    public static readonly string ProfileSaveFile = "Profile.bin";
+
 }

@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class FollowCamera : MonoBehaviour
 {
     public float FollowDistance = 2f;
-    public float CamYHeight = 2f;
     public float CameraRotateSpeed = 5f;
+    public float FollowCamHeight = 2f;
+
+    public float TransitionTime = 1f;
 
     // Helper function to get direction between katamari ball and camera
     public static Vector3 GetSurfaceDirToCam(KatamariCore core, FollowCamera cam)
@@ -42,8 +44,14 @@ public class FollowCamera : MonoBehaviour
 
     private KatamariCore _katamariCore;
 
+    private bool _allowInput = true;
     private Vector3 _desiredPosition;
     private Quaternion _desiredRotation;
+
+    // Memebers to help lerp between sates
+    private Vector3 _lastDirToCam;
+    private Vector3 _lastSwitchDir;
+    private float _lastSwitchTime;
 
     // Use this for initialization
     void Start()
@@ -64,36 +72,70 @@ public class FollowCamera : MonoBehaviour
             statePair.Value.Setup(this, _katamariCore);
         }
 
+        KatamariApp app = KatamariAppProxy.instance;
+        if( app != null )
+        {
+            app.GetEventManager().AddListener(LevelPlayState.GameplayOverEventName, DisallowInput);
+        }
+
         // Default state
         SwitchState(DefaultState);
+    }
+
+    void OnDestroy()
+    {
+        KatamariApp app = KatamariAppProxy.instance;
+        if (app != null)
+        {
+            app.GetEventManager().RemoveListener(LevelPlayState.GameplayOverEventName, DisallowInput);
+        }
+    }
+
+    bool DisallowInput( object p )
+    {
+        _allowInput = false;
+
+        return false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (_allowInput)
         {
-            SwitchState(FollowState.UserPan);
-        }
-        else
-        {
-            SwitchState(FollowState.Auto);
-        }
+            if (Input.GetMouseButton(1))
+            {
+                SwitchState(FollowState.UserPan);
+            }
+            else
+            {
+                SwitchState(FollowState.Auto);
+            }
 
-        if (_currentState != null)
-        {
-            _currentState.Update(Time.deltaTime);
+            if (_currentState != null )
+            {
+                _currentState.Update(Time.deltaTime);
+            }
         }
 
         gameObject.transform.position = _desiredPosition;
         gameObject.transform.rotation = _desiredRotation;
     }
 
-    public void SetNewPositioning( Vector3 dirToCam )
+    public void SetNewPositioning( Vector3 dirToCam, bool allowLerp )
     {
+        if (allowLerp)
+        {
+            // Lerp between last state's camera dir
+            float timeSpentLerping = Mathf.Min(TransitionTime, (Time.time - _lastSwitchTime));
+            dirToCam = Vector3.Lerp(_lastSwitchDir, dirToCam, timeSpentLerping / TransitionTime);
+        }
+
+        _lastDirToCam = dirToCam;
+
         // Put the camera at the proper distance from the ball, and give it some height
         Vector3 camPos = _katamariCore.transform.position + (dirToCam * FollowDistance * _katamariCore.transform.lossyScale.y);
-        Vector3 add = (camPos.normalized * CamYHeight * _katamariCore.transform.lossyScale.y);
+        Vector3 add = (camPos.normalized * FollowCamHeight * _katamariCore.transform.lossyScale.y);
         camPos += add;
 
         // Create a rotation (that respects our proper "down". transform.forward does NOT respect this well) to face the camera at the ball
@@ -121,6 +163,8 @@ public class FollowCamera : MonoBehaviour
             }
 
             _currentState = desiredState;
+            _lastSwitchDir = _lastDirToCam;
+            _lastSwitchTime = Time.time;
 
             if (_currentState != null)
             {

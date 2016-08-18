@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
+[System.Serializable]
 public class PlayerProfile {
-
     private Dictionary<string, LevelScore> _levelScores;
+
+    [System.NonSerialized]
     private LevelData _levelData;
     
     public void Setup( LevelData levels )
@@ -12,7 +17,11 @@ public class PlayerProfile {
         _levelData = levels;
         _levelScores = new Dictionary<string, LevelScore>();
 
+        ReadFromDisk();
+        
         SetupLevelData(levels);
+
+        SaveToDisk();
     }
 
     void SetupLevelData( LevelData levels )
@@ -21,16 +30,21 @@ public class PlayerProfile {
         for ( int i = 0; i < definitions.Length; ++i )
         {
             LevelData.LevelDefinition def = definitions[i];
-            LevelScore score = new LevelScore()
-            {
-                LevelID = def.LevelID,
-                BaseScore = 0,
-                TotalScore = 0,
-                BonusScore = 0,
-                TimeRemaining = 0
-            };
+            LevelScore score = GetLevelScore(def.LevelID);
 
-            _levelScores.Add(def.LevelID, score);
+            if( score == null )
+            {
+                score = new LevelScore()
+                {
+                    LevelID = def.LevelID,
+                    BaseScore = 0,
+                    TotalScore = 0,
+                    BonusScore = 0,
+                    TimeRemaining = 0
+                };
+
+                _levelScores.Add(def.LevelID, score);
+            };
         }
     }
 
@@ -38,10 +52,7 @@ public class PlayerProfile {
     {
         LevelScore score = null;
 
-        if( !_levelScores.TryGetValue( levelID, out score ) )
-        {
-            Debug.LogError("PlayerProfile: Requesting score for undefined level " + levelID);
-        }
+        _levelScores.TryGetValue(levelID, out score);
 
         return score;
     }
@@ -65,6 +76,51 @@ public class PlayerProfile {
         } else
         {
             score.NewHighScore = false;
+        }
+
+        SaveToDisk();
+    }
+
+    string SaveFilePath()
+    {
+        return Application.persistentDataPath + Files.ProfileSaveFile;
+    }
+
+    void SaveToDisk()
+    {
+        try
+        {
+            string saveFilePath = SaveFilePath();
+            Debug.Log("Saving profile to: " + saveFilePath);
+
+            using (Stream stream = new FileStream(saveFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read) )
+            {
+                System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                formatter.Serialize(stream, this);
+                stream.Close();
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError(ex.Message);
+        }
+    }
+
+    void ReadFromDisk()
+    {
+        string saveFilePath = SaveFilePath();
+        if ( System.IO.File.Exists( saveFilePath ) )
+        {
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            using (Stream stream = new FileStream(saveFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                PlayerProfile obj = (PlayerProfile)formatter.Deserialize(stream);
+
+                this._levelScores = obj._levelScores;
+
+                stream.Close();
+            }
+                
         }
     }
 }

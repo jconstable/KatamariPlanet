@@ -46,4 +46,13 @@ public class LevelSelectUIHub : MonoBehaviour, UIManager.IUIScreen {
             newCellOb.transform.SetParent(parent, false);
         }
     }
+
+    public void OnQuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

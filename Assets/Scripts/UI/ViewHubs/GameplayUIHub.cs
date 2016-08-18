@@ -67,9 +67,12 @@ public class GameplayUIHub : MonoBehaviour, UIManager.IUIScreen {
 
     void Update()
     {
-        float t = (Time.time - _startTime) / _totalTime;
-        ProgressBarFill.color = Color.Lerp(ProgressBarFull, ProgressBarEmpty, t);
-        ProgressBarRect.sizeDelta = new Vector2(-_progressBarFullWidth * t, 1f);
+        if (ProgressBarRect != null)
+        {
+            float t = (Time.time - _startTime) / _totalTime;
+            ProgressBarFill.color = Color.Lerp(ProgressBarFull, ProgressBarEmpty, t);
+            ProgressBarRect.sizeDelta = new Vector2(-_progressBarFullWidth * t, 1f);
+        }
     }
 
     public bool UpdateTimeLeft( object p )

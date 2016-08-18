@@ -123,6 +123,10 @@ public class KatamariCore : MonoBehaviour
             app.GetEventManager().SendEvent(LevelStats.SwallowableObjectSwallowedEventName, m.gameObject);
         }
         
+        if( m.gameObject.tag == Tags.PlanetTag )
+        {
+            app.GetEventManager().SendEvent(LevelPlayState.GameplayOverEventName, null);
+        }
     }
 
     public void OnDrawGizmos()
